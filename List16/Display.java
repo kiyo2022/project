@@ -5,10 +5,11 @@ package List16;
  */
 public class Display {
 
-	/**
-	 * 画面へ出力するメッセージ
-	 */
-	protected enum DesplayMessage {
+	/********************************
+	 * 画面へ出力するメッセージのガワ作り
+	 * enumで定義している
+	 ************************************************************************/
+	protected enum DesplayMessage {                   /*↓機種依存による改行*/
 		GameStart("*******チップ枚数とカード*******" + getLineSeparator() +
 				"総計： %d ([10]：%d枚 [1]：%d枚)" + getLineSeparator() +
 				"現在のカード： %s" + getLineSeparator() +
@@ -34,7 +35,10 @@ public class Display {
 		private DesplayMessage(String message) {
 			this.message = message;
 		}
-
+		/*******************************************
+		 * 変数formatで引数をいくらでも書けるようにしてあって
+		 * そのメッセージと一緒に引数を返す様にしている
+		 ********************************************/
 		public String format(Object... args) {
 			return String.format(message, args);
 		}
@@ -56,11 +60,11 @@ public class Display {
 		return System.getProperty("line.separator");
 	}
 
-	/**
-	 * ゲーム開始
+	/**************************************************************
+	 * ゲーム開始の時に実際に表示される文
 	 * @param chips 手持ちのチップ
 	 * @param firstCard  最初のカード
-	 */
+	 **************************************************************/
 	public void viewGameStart(Chips chips, Card firstCard) {
 		println(DesplayMessage.GameStart.format(
 				chips.getTatal(),
@@ -69,15 +73,21 @@ public class Display {
 				firstCard.toString()));
 	}
 
-	/**
-	 * ゲーム状況
+	/*************************************************************************************************************
+	 * プレイヤーがBigOrSmallを選択した後のゲーム状況を実際に表示させる文
 	 * @param tableChip テーブル上のチップ
 	 * @param bigOrSmall プレイヤーの選択
 	 * @param firstCard 最初のカード
 	 * @param secondCard 最初のカード
-	 */
+	 *******************************************************************************************************/
 	public void viewGameSituation(long tableChip, boolean bigOrSmall, Card firstCard, Card secondCard) {
+		/**********************************************************************************************************
+		 * プレイヤーがBigかSmallのどちらを選んだかを返してselectに放り込む
+		 *******************************************************************************************************/
 		String select = (bigOrSmall) ? DesplayMessage.BigSelect.message : DesplayMessage.SmallSelect.message;
+		/**********************************************************************************************************
+		 * firstCardとsecondCardを見比べて大きければBig,小さければSmallをresultに放り込む
+		 *******************************************************************************************************/
 		String result = (firstCard.isBigOrSmall(secondCard)) ? DesplayMessage.BigSelect.message : DesplayMessage.SmallSelect.message;
 		println(DesplayMessage.GameSituation.format(
 				tableChip,
@@ -89,32 +99,32 @@ public class Display {
 				result));
 	}
 
-	/**
-	 * ゲーム勝利
+	/*****************************************************
+	 * ゲーム勝利したときに表示させる文
 	 * @param tableChip テーブル上のチップ
-	 */
+	 **********************************************************/
 	public void viewWin(long tableChip) {
 		println(DesplayMessage.GameWin.format(tableChip));
 	}
 
-	/**
-	 * ゲーム敗退
-	 */
+	/********************************************************
+	 * ゲーム敗退した時に表示させる文
+	 *******************************************************/
 	public void viewLoss() {
 		println(DesplayMessage.GameLoss.message);
 	}
 
-	/**
-	 * ゲーム結果
+	/***************************************************************************
+	 * ゲーム結果を表示させる文
 	 * @param chips 手持ちのチップ
-	 */
+	 ****************************************************************************/
 	public void viewGameResult(Chips chips) {
 		println(DesplayMessage.GameResult.format(chips.getTatal(), chips.getTenValue(), chips.getOneValue()));
 	}
 
-	/**
+	/******************************************************************************
 	 * ゲーム終了
-	 */
+	 *******************************************************************************/
 	public void viewEnd() {
 		println(DesplayMessage.GameEnd.message);
 	}

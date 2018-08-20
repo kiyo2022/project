@@ -60,34 +60,39 @@ public class Chips {
 	public long getTatal() {
 		return value;
 	}
-	/**
+	/*******************************************
+	 * valueを10で割った数を返せば10チップがわかる
 	 * 10チップを取得する
 	 * @return
-	 */
+	 *******************************************/
 	public long getTenValue() {
 		return value / 10;
 	}
-	/**
+	/******************************************
+	 * 10で割った余りを返せば1桁は分かる
 	 * 1チップを取得する
 	 * @return
-	 */
+	 ******************************************/
 	public long getOneValue() {
 		return value % 10;
 	}
-	/**
+	/***********************************************
+	 * valueが20以下だったら賭けれるチップの最大数を
+	 * valueまでにする
+	 * そうでなければ20まで
 	 * ベットできる最大値を取得する
 	 * @return
-	 */
+	 *************************************************/
 	public long getMaxBetValue() {
 		if ( MaxBetValue > value ) {
 			return value;
 		}
 		return MaxBetValue;
 	}
-	/**
+	/******************************************
 	 * ベットできる最小値を取得する
 	 * @return
-	 */
+	 *********************************************/
 	public long getMinBetValue() {
 		return MinBetValue;
 	}

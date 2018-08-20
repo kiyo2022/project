@@ -5,9 +5,11 @@ package List16;
  */
 public class BigOrSmall {
 
-	/**
-	 * 開始時のチップ総数
-	 */
+	/*********************************************
+	 * 開始時のチップ総数を100枚に
+	 * LはTrumpクラスのserialVersionUID表記に従う
+	 *********************************************/
+
 	private static final long StartChips = 100L;
 
 	public static void main(String[] args) {
