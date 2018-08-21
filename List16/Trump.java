@@ -49,6 +49,8 @@ public class Trump extends ArrayList<Card>{
 	}
 	/*********************************************************
 	 *シャッフルしたArrayList<card>の一番目をresultに放り込んで
+	 *放り込んだ奴をArrayList<card>から削除して
+	 *再度リストの後ろに追加している
 	 *returnで返している
 	 *
 	 * @return カード

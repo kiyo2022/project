@@ -117,7 +117,7 @@ public class Keyboard {
 				Display.println(InputError.MinimumBet.format(chips.getMinBetValue()));
 			}
 			/*******************************************************
-			 * 最少掛け金より高かったらエラーを吐く様にしている
+			 * 最大掛け金より高かったらエラーを吐く様にしている
 			 ***************************************************/
 			else if (chips.getMaxBetValue() < result) {
 				Display.println(InputError.MaxmumBet.format(chips.getMaxBetValue()));
@@ -169,13 +169,13 @@ public class Keyboard {
 		return isKeyIn(Prompt.GameEnd.message);
 	}
 
-	/**
+	/********************************************
 	 * Yes or No 選択の入力
 	 * @param out プロンプトの文字列
 	 * @return
 	 * true: Yesが選択された
 	 * false: Noが選択された
-	 */
+	 ***********************************************/
 	private boolean isKeyIn(String out) {
 		while (true) {
 			if (!"".equals(out)) {

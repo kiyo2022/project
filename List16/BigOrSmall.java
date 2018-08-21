@@ -23,22 +23,30 @@ public class BigOrSmall {
 		Chips chips = new Chips(StartChips);
 		// ゲーム開始する
 		do {
-			// トランプをシャッフルする
+			// Trumpクラスにあるシャッフルを使う
 			trump.shuffle();
-			// 最初のカードをひく
+			// TrumpクラスにあるgetCardで最初のカードをひく
 			Card firstCard = trump.getCard();
-			// ゲーム開始の表示
+			// Displayクラスにあるゲーム開始の表示
 			display.viewGameStart(chips, firstCard);
-			// ベット数を入力して、それを手持ちのチップから引いてテーブル上のチップ数とする
+			/*******************************************************************************
+			 * ベット数を入力して、それを手持ちのチップから引いてテーブル上のチップ数とする
+			 * betChipsはChipsクラスから手持ちから掛け金引く処理
+			 * betValueは掛け金を入力して返す処理
+			 * ***************************************************************************/
 			long tableChip = chips.betChips(key.betValue(chips));
 			while (true) {
-				// BigOrSmallの選択
+				// KeyboardクラスからBigOrSmallの選択を表示させる
 				boolean bigOrSmall = key.isBigOrSmall(firstCard);
 				// 次のカードをひく
 				Card secondCard = trump.getCard(firstCard);
-				// ゲームの状況を表示する
+				// Displayクラスからゲームの状況を表示する
 				display.viewGameSituation(tableChip, bigOrSmall, firstCard, secondCard);
-				// 勝敗の判定
+				/*******************************************************************************
+				 * 勝敗の決定
+				 * 2枚目のカードから1枚目のカードを引いて
+				 * マイナスならsmallプラスならbigをbigOrSmallに入れてる
+				 * ***************************************************************************/
 				if (bigOrSmall == firstCard.isBigOrSmall(secondCard)) {
 					// 勝利したときの報酬を得る
 					tableChip = chips.getReward(tableChip);
