@@ -198,20 +198,12 @@ public class Keyboard {
 	private int getKeyIn() {
 		int result;
 		String in = scanner.nextLine();
-		try {
-			result = Integer.parseInt(in);
-		} catch (NumberFormatException e) {
-			Display.println(InputError.NumericCharacters.message);
-			return -1;
-		}
-		switch (result) {
-		case 0:
-		case 1:
-			break;
-		default:
+		if(in.equals("0")|| in.equals("1")){
+				result = Integer.parseInt(in);
+			return result;
+		}else{
 			Display.println(InputError.NumericZeroOrOwn.message);
 			return -1;
 		}
-		return result;
 	}
 }
