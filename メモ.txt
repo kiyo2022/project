@@ -13,6 +13,8 @@ RaspberryPiで人感センサーを作る
 https://qiita.com/inaBowBow/items/dca01622d086f113db00
 Amazon Rekognitionで顔認証スクリプト
 https://qiita.com/OMOIKANESAN/items/c5d1dfe5c00105739dcf
+人感センサーとカメラをRaspberryPiにつないでみた
+http://akkun49.blog.fc2.com/blog-entry-77.html
 ラズパイ再起動
 sudo shutdown -h now
 
