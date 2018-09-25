@@ -1,4 +1,18 @@
+IoTを使って畑を監視する
 https://tech.recruit-mp.co.jp/iot/farm-monitoring-with-iot/
+初心者がどハマりしたAWS IoTのRuleの概要と使い方まとめ
 https://qiita.com/m-yamashita/items/76781a4f8879b617c334
+【AWS IoTルールの基本 その1】AWS IoTルールの設定方法(ナレコムAWSレシピ）
 https://recipe.kc-cloud.jp/archives/10566
+ラズパイ写真撮影コマンド
+http://www.raspberrypirulo.net/entry/2016/09/23/%E3%82%AB%E3%83%A1%E3%83%A9%E3%81%A7%E5%86%99%E7%9C%9F/%E5%8B%95%E7%94%BB%E6%92%AE%E5%BD%B1
+http://hendigi.karaage.xyz/2016/11/raspi-video/
+RekognitionとRaspberry piでペット監視
+https://qiita.com/kickno/items/0fff2616b4c812c45205
+RaspberryPiで人感センサーを作る
+https://qiita.com/inaBowBow/items/dca01622d086f113db00
+Amazon Rekognitionで顔認証スクリプト
+https://qiita.com/OMOIKANESAN/items/c5d1dfe5c00105739dcf
+ラズパイ再起動
 sudo shutdown -h now
+
