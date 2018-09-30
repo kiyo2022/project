@@ -1,20 +1,39 @@
-IoT‚ğg‚Á‚Ä”¨‚ğŠÄ‹‚·‚é
+IoTã‚’ä½¿ã£ã¦ç•‘ã‚’ç›£è¦–ã™ã‚‹
 https://tech.recruit-mp.co.jp/iot/farm-monitoring-with-iot/
-‰SÒ‚ª‚Çƒnƒ}‚è‚µ‚½AWS IoT‚ÌRule‚ÌŠT—v‚Æg‚¢•û‚Ü‚Æ‚ß
+åˆå¿ƒè€…ãŒã©ãƒãƒã‚Šã—ãŸAWS IoTã®Ruleã®æ¦‚è¦ã¨ä½¿ã„æ–¹ã¾ã¨ã‚
 https://qiita.com/m-yamashita/items/76781a4f8879b617c334
-yAWS IoTƒ‹[ƒ‹‚ÌŠî–{ ‚»‚Ì1zAWS IoTƒ‹[ƒ‹‚Ìİ’è•û–@(ƒiƒŒƒRƒ€AWSƒŒƒVƒsj
+ã€AWS IoTãƒ«ãƒ¼ãƒ«ã®åŸºæœ¬ ãã®1ã€‘AWS IoTãƒ«ãƒ¼ãƒ«ã®è¨­å®šæ–¹æ³•(ãƒŠãƒ¬ã‚³ãƒ AWSãƒ¬ã‚·ãƒ”ï¼‰
 https://recipe.kc-cloud.jp/archives/10566
-ƒ‰ƒYƒpƒCÊ^B‰eƒRƒ}ƒ“ƒh
+ãƒ©ã‚ºãƒ‘ã‚¤å†™çœŸæ’®å½±ã‚³ãƒãƒ³ãƒ‰
 http://www.raspberrypirulo.net/entry/2016/09/23/%E3%82%AB%E3%83%A1%E3%83%A9%E3%81%A7%E5%86%99%E7%9C%9F/%E5%8B%95%E7%94%BB%E6%92%AE%E5%BD%B1
 http://hendigi.karaage.xyz/2016/11/raspi-video/
-Rekognition‚ÆRaspberry pi‚ÅƒyƒbƒgŠÄ‹
+Rekognitionã¨Raspberry piã§ãƒšãƒƒãƒˆç›£è¦–
 https://qiita.com/kickno/items/0fff2616b4c812c45205
-RaspberryPi‚ÅlŠ´ƒZƒ“ƒT[‚ğì‚é
+RaspberryPiã§äººæ„Ÿã‚»ãƒ³ã‚µãƒ¼ã‚’ä½œã‚‹
 https://qiita.com/inaBowBow/items/dca01622d086f113db00
-Amazon Rekognition‚ÅŠç”FØƒXƒNƒŠƒvƒg
+Amazon Rekognitionã§é¡”èªè¨¼ã‚¹ã‚¯ãƒªãƒ—ãƒˆ
 https://qiita.com/OMOIKANESAN/items/c5d1dfe5c00105739dcf
-lŠ´ƒZƒ“ƒT[‚ÆƒJƒƒ‰‚ğRaspberryPi‚É‚Â‚È‚¢‚Å‚İ‚½
+äººæ„Ÿã‚»ãƒ³ã‚µãƒ¼ã¨ã‚«ãƒ¡ãƒ©ã‚’RaspberryPiã«ã¤ãªã„ã§ã¿ãŸ
 http://akkun49.blog.fc2.com/blog-entry-77.html
-ƒ‰ƒYƒpƒCÄ‹N“®
+ãƒ©ã‚ºãƒ‘ã‚¤å†èµ·å‹•
 sudo shutdown -h now
+
+{
+    "StatusCode": 200,
+    "FaceModelVersion": "3.0",
+    "CollectionArn": "aws:rekognition:us-west-2:922728937890:collection/kodani"
+}
+
+ã‚³ãƒ¬ã‚¯ã‚·ãƒ§ãƒ³ã¸ã®é¡”è¿½åŠ 
+aws rekognition index-faces --image '{"S3Object":{"Bucket":"bfdata1","Name":"raspberry_pi_camera/kodani/kodani_sample.jpg"}}' --collection-id "kodani" --detection-attributes "ALL" --external-image-id "example-image.jpg"
+
+ã‚³ãƒ¬ã‚¯ã‚·ãƒ§ãƒ³ã€€ãƒªã‚¹ãƒˆä¸€è¦§
+aws rekognition list-faces --collection-id "kodani"
+
+ã‚³ãƒ¬ã‚¯ã‚·ãƒ§ãƒ³æ¯”è¼ƒ
+
+aws rekognition search-faces-by-image --image '{"S3Object":{"Bucket":"bfdata1","Name":"raspberry_pi_camera/kodani/kodani_sample2.jpg"}}' --collection-id "kodani"
+
+
+aws rekognition detect-labels --image '{"S3Object":{"Bucket":"bfdata1", "Name":"raspberry_pi_camera/kodani/kodani_sample2.jpg"}}
 
