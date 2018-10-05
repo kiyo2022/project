@@ -37,3 +37,7 @@ aws rekognition search-faces-by-image --image '{"S3Object":{"Bucket":"bfdata1","
 
 aws rekognition detect-labels --image '{"S3Object":{"Bucket":"bfdata1", "Name":"raspberry_pi_camera/kodani/kodani_sample2.jpg"}}
 
+セレニウム関係
+http://www.seleniumqref.com/api/python/element_infoget/Python_get_attribute.html
+https://qiita.com/ywindish/items/5a992c49387d81df900e
+
