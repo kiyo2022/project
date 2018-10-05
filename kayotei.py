@@ -17,3 +17,15 @@ zansitukanri_btn.click()
 zansitukanri_tbl = driver.find_element_by_name("raRMTypeInvRmrmCntDate4")
 zansitukanri_ra = zansitukanri_tbl.get_attribute("value")
 print(zansitukanri_ra)
+
+//*[@id="rmType_1"]/table[1]/tbody/tr[1]/td[4]/div/input
+//*[@id="rmType_1"]/table[2]/tbody/tr[1]/td[4]/div/input
+//*[@id="rmType_1"]/table[3]/tbody/tr[1]/td[4]/div/input
+//*[@id="rmType_1"]/table[5]/tbody/tr[1]/td[4]/div/input
+//*[@id="rmType_1"]/table[7]/tbody/tr[1]/td[4]/div/input
+//*[@id="netRmTypeGroup_9"]/tbody/tr[1]/td[4]/div/input[1]
+//*[@id="netRmTypeGroup_12"]/tbody/tr[1]/td[4]/div/input[1]
+//*[@id="netRmTypeGroup_13"]/tbody/tr[1]/td[4]/div/input[1]
+//*[@id="netRmTypeGroup_2"]/tbody/tr[1]/td[4]/div/input[1]
+//*[@id="rmType_3"]/table[1]/tbody/tr[1]/td[4]/div/input
+//*[@id="netRmTypeGroup_3"]/tbody/tr[1]/td[4]/div/input[1]
