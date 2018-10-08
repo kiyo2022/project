@@ -1,14 +1,28 @@
+売り上げランキング
 
-zansitukanri = driver.find_element_by_xpath("//input[@name='raRmTypeInvRmrmCntDate4']")[2]
-zansitukanri.send_keys("4")
+じゃらんnet
+楽天トラベル
+JTB
+HPDS
+るるぶトラベル
+一休.com
+ちゅらく
 
-zansitukanri = driver.find_element_by_xpath('//*[@id="rmType_1"]/table[2]/tbody/tr[1]/td[5]/div/input')
-zan_value = zansitukanri.get_attribute("value")
-if int(zan_value) == 2:
-    print("YES")
-else:
-    print("NO")
+部屋ランク
 
-raRmTypeInvRmrmCntDate1
+和室15畳　アップロード
+淳特別室06
+特別室05
+特別室01
+特別室和洋
 
-https://www.seleniumhq.org/
+
+
+要件#################
+マイナスを0にするコマンド
+ネット外のマイナスの検証
+ソースコードが最後まで動けてるか分からない
+
+https://www.tl-lincoln.net/accomodation/Ascsc1000LogInAction.do
+https://www.tl-lincoln.net/accomodation/Ascsc1000ForceLogOutAction.do
+#############################
