@@ -1,7 +1,12 @@
 # -*- coding: utf-8 -*-
 
 from selenium import webdriver
-driver = webdriver.Chrome("c:/Users/Ycafe4/python/chromedriver.exe")
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.common.alert import Alert
+import time
+
+driver = webdriver.Chrome("c:/Users/bfdev02/python/chromedriver.exe")
 driver.get("https://www.tl-lincoln.net/accomodation/Ascsc1000InitAction.do")
 #ログインまでの処理
 lincoln_login_id = driver.find_element_by_id("txt_usrId")
@@ -40,7 +45,57 @@ def kansi():
 	    kaisya2 = driver.find_element_by_xpath(xpath)
 	    kaisya2.clear()
 	    kaisya2.send_keys(v)
-	    
+	#値送信
+	def ataisousin():
+	    sousin = driver.find_element_by_xpath('//*[@id="sendBtn"]')
+	    sousin.click()
+	    #指定したdriverに対して最大で10秒間待つように設定する
+	    wait = WebDriverWait(driver, 10)
+	    #Alertが表示されるまで待機するよう設定する
+	    wait.until(expected_conditions.alert_is_present())
+	    #5秒間待機する（Alertが表示されていることを確認するため）
+	    time.sleep(5)
+	    #AlertのOKボタンを押下する
+	    Alert(driver).accept()
+	    time.sleep(5)
+	    WebDriverWait(driver, 10).until(lambda d: len(d.window_handles) > 1)
+	    driver.switch_to.window(driver.window_handles[1])
+	    driver.close()
+	    time.sleep(5)
+	    driver.switch_to.window(driver.window_handles[0])
+	#ネットマイナス削除##################ここから作業
+	def net_mainasu():
+	    nichiji = driver.find_element_by_xpath('//*[@id="dataHeaderInner"]/div[2]/table/tbody/tr/td[1]/div/a/div')
+	    nichiji.click()
+	
+	    WebDriverWait(driver, 10).until(lambda d: len(d.window_handles) > 1)
+	    driver.switch_to.window(driver.window_handles[1])
+	    print(len(driver.window_handles))
+	
+	    nettype = driver.find_element_by_xpath('//*[@id="gBodyPopup"]/div/div[2]/ul/li[3]/a')
+	    nettype.click()
+	    check = driver.find_element_by_xpath('//*[@id="checkBoxNetRoomTypeGroupGrp2_0"]')
+	    check.click()
+	    zansitu = driver.find_element_by_xpath('//*[@id="groupSsStatusFlgOff"]')
+	    zansitu.click()
+	    sousin0 = driver.find_element_by_xpath('//*[@id="sendBtn"]')
+	    sousin0.click()
+	
+	    #指定したdriverに対して最大で10秒間待つように設定する
+	    wait = WebDriverWait(driver, 10)
+	    #Alertが表示されるまで待機するよう設定する
+	    wait.until(expected_conditions.alert_is_present())
+	    #3秒間待機する（Alertが表示されていることを確認するため）
+	    time.sleep(5)
+	    #AlertのOKボタンを押下する
+	    Alert(driver).accept()
+	    time.sleep(5)
+	    WebDriverWait(driver, 10).until(lambda d: len(d.window_handles) > 1)
+	    driver.switch_to.window(driver.window_handles[1])
+	    driver.close()
+	    time.sleep(5)
+	    driver.switch_to.window(driver.window_handles[0])
+
 	###########判定
 	def henkou(aa ,bb ,bsyamei, cc , csyamei, dd ,dsyamei ,ee ,esyamei ,ff ,fsyamei ,gg ,gsyamei ,hh , hsyamei, ii ,isyamei, jj ,jsyamei ,kk ,ksyamei ,ll ,lsyamei ,mm ,msyamei ,nn ,nsyamei ):
 	    def hantei13(aa , bb ,bsyamei):
@@ -242,6 +297,8 @@ def kansi():
 	    #a, wasitunet, b, gentei, c, jtb, d, kinki, e, nihon, f, top, g, ANA, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, m, jtb01, n, toku01)
 	    if a < 0:
 	        henkou(a, b, gentei, c, jtb, d, kinki, e, nihon, f, top, g, ANA, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, m, jtb01, n, toku01)
+	        ataisousin()
+	        
             
 	    if b < 0:
 	        henkou(b, a, wasitunet, c, jtb, d, kinki, e, nihon, f, top, g, ANA, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, m, jtb01, n, toku01)
@@ -296,6 +353,25 @@ def kansi2():
 	    kaisya2 = driver.find_element_by_xpath(xpath)
 	    kaisya2.clear()
 	    kaisya2.send_keys(v)
+	    
+	#値送信
+	def ataisousin():
+	    sousin = driver.find_element_by_xpath('//*[@id="sendBtn"]')
+	    sousin.click()
+	    #指定したdriverに対して最大で10秒間待つように設定する
+	    wait = WebDriverWait(driver, 10)
+	    #Alertが表示されるまで待機するよう設定する
+	    wait.until(expected_conditions.alert_is_present())
+	    #5秒間待機する（Alertが表示されていることを確認するため）
+	    time.sleep(5)
+	    #AlertのOKボタンを押下する
+	    Alert(driver).accept()
+	    time.sleep(5)
+	    WebDriverWait(driver, 10).until(lambda d: len(d.window_handles) > 1)
+	    driver.switch_to.window(driver.window_handles[1])
+	    driver.close()
+	    time.sleep(5)
+	    driver.switch_to.window(driver.window_handles[0])
 	    
 	###########判定1###################
 	def henkou(aa ,bb ,bsyamei, cc , csyamei, dd ,dsyamei ,ee ,esyamei ,ff ,fsyamei ,gg ,gsyamei ,hh , hsyamei, ii ,isyamei, jj ,jsyamei ,kk ,ksyamei ,ll ,lsyamei ,mm ,msyamei ,nn ,nsyamei ):
@@ -820,6 +896,25 @@ def kansi3():
 	    kaisya2 = driver.find_element_by_xpath(xpath)
 	    kaisya2.clear()
 	    kaisya2.send_keys(v)
+	    
+	#値送信
+	def ataisousin():
+	    sousin = driver.find_element_by_xpath('//*[@id="sendBtn"]')
+	    sousin.click()
+	    #指定したdriverに対して最大で10秒間待つように設定する
+	    wait = WebDriverWait(driver, 10)
+	    #Alertが表示されるまで待機するよう設定する
+	    wait.until(expected_conditions.alert_is_present())
+	    #5秒間待機する（Alertが表示されていることを確認するため）
+	    time.sleep(5)
+	    #AlertのOKボタンを押下する
+	    Alert(driver).accept()
+	    time.sleep(5)
+	    WebDriverWait(driver, 10).until(lambda d: len(d.window_handles) > 1)
+	    driver.switch_to.window(driver.window_handles[1])
+	    driver.close()
+	    time.sleep(5)
+	    driver.switch_to.window(driver.window_handles[0])
 	    
 	###########判定2###################
 	def henkou2(aa ,gg ,gsyamei ,hh , hsyamei, ii ,isyamei, jj ,jsyamei ,kk ,ksyamei ,ll ,lsyamei ,mm ,msyamei ,nn ,nsyamei ):
