@@ -63,22 +63,50 @@ def kansi():
 	    driver.close()
 	    time.sleep(5)
 	    driver.switch_to.window(driver.window_handles[0])
-	#ネットマイナス削除##################ここから作業
-	def net_mainasu():
-	    nichiji = driver.find_element_by_xpath('//*[@id="dataHeaderInner"]/div[2]/table/tbody/tr/td[1]/div/a/div')
+	#ネットマイナス削除##################
+	def net_mainasu(z, xpath_heyamei):
+	    nichiji = driver.find_element_by_xpath('//*[@id="dataHeaderInner"]/div[2]/table/tbody/tr/td[' + z + ']/div/a/div')
 	    nichiji.click()
 	
 	    WebDriverWait(driver, 10).until(lambda d: len(d.window_handles) > 1)
-	    driver.switch_to.window(driver.window_handles[1])
 	    print(len(driver.window_handles))
 	
 	    nettype = driver.find_element_by_xpath('//*[@id="gBodyPopup"]/div/div[2]/ul/li[3]/a')
 	    nettype.click()
-	    check = driver.find_element_by_xpath('//*[@id="checkBoxNetRoomTypeGroupGrp2_0"]')
+	    check = driver.find_element_by_xpath('xpath_heyamei')
 	    check.click()
 	    zansitu = driver.find_element_by_xpath('//*[@id="groupSsStatusFlgOff"]')
 	    zansitu.click()
 	    sousin0 = driver.find_element_by_xpath('//*[@id="sendBtn"]')
+	    sousin0.click()
+	
+	    #指定したdriverに対して最大で10秒間待つように設定する
+	    wait = WebDriverWait(driver, 10)
+	    #Alertが表示されるまで待機するよう設定する
+	    wait.until(expected_conditions.alert_is_present())
+	    #3秒間待機する（Alertが表示されていることを確認するため）
+	    time.sleep(5)
+	    #AlertのOKボタンを押下する
+	    Alert(driver).accept()
+	    time.sleep(5)
+	    WebDriverWait(driver, 10).until(lambda d: len(d.window_handles) > 1)
+	    driver.switch_to.window(driver.window_handles[1])
+	    driver.close()
+	    time.sleep(5)
+	    driver.switch_to.window(driver.window_handles[0])
+	#旅行会社販売先削除##################
+	def ryokou_mainasu(z, xpath_heyamei):
+	    nichiji = driver.find_element_by_xpath('//*[@id="dataHeaderInner"]/div[2]/table/tbody/tr/td[' + z + ']/div/a/div')
+	    nichiji.click()
+	
+	    WebDriverWait(driver, 10).until(lambda d: len(d.window_handles) > 1)
+	    print(len(driver.window_handles))
+	
+	    nettype = driver.find_element_by_xpath('//*[@id="gBodyPopup"]/div/div[2]/ul/li[2]/a')
+	    nettype.click()
+	    check = driver.find_element_by_xpath('xpath_heyamei')
+	    check.click()
+	    sousin0 = driver.find_element_by_xpath('//*[@id="gBodyPopup"]/div/div[4]/ul/li[2]/a')
 	    sousin0.click()
 	
 	    #指定したdriverに対して最大で10秒間待つように設定する
@@ -298,7 +326,7 @@ def kansi():
 	    if a < 0:
 	        henkou(a, b, gentei, c, jtb, d, kinki, e, nihon, f, top, g, ANA, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, m, jtb01, n, toku01)
 	        ataisousin()
-	        
+	        ############################ここらへんから######################
             
 	    if b < 0:
 	        henkou(b, a, wasitunet, c, jtb, d, kinki, e, nihon, f, top, g, ANA, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, m, jtb01, n, toku01)
