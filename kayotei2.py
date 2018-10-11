@@ -1,28 +1,26 @@
-����グ�����L���O
+売り上げランキング
 
-������net
-�y�V�g���x��
+じゃらんnet
+楽天トラベル
 JTB
 HPDS
-���ԃg���x��
-��x.com
-����炭
+るるぶトラベル
+一休.com
+ちゅらく
 
-���������N
+部屋ランク
 
-�a��15��@�A�b�v���[�h
-�~���ʎ�06
-���ʎ�05
-���ʎ�01
-���ʎ��a�m
+和室15畳　アップロード
+淳特別室06
+特別室05
+特別室01
+特別室和洋
 
 
 
-�v��#################
-�}�C�i�X��0�ɂ���R�}���h
-�l�b�g�O�̃}�C�i�X�̌���
-�\�[�X�R�[�h���Ō�܂œ����Ă邩������Ȃ�
-
-https://www.tl-lincoln.net/accomodation/Ascsc1000LogInAction.do
-https://www.tl-lincoln.net/accomodation/Ascsc1000ForceLogOutAction.do
+要件#################
+マイナスを消していってるが大丈夫か？(11/24消しました　－６とー２)
+マイナス処理出来ない時お知らせいる？
+1か月は誤作動確認含め、テストします
+中川さんと以下連携
 #############################
