@@ -71,9 +71,10 @@ def kansi():
 	    WebDriverWait(driver, 10).until(lambda d: len(d.window_handles) > 1)
 	    print(len(driver.window_handles))
 	
+	    driver.switch_to.window(driver.window_handles[1])	    
 	    nettype = driver.find_element_by_xpath('//*[@id="gBodyPopup"]/div/div[2]/ul/li[3]/a')
 	    nettype.click()
-	    check = driver.find_element_by_xpath('xpath_heyamei')
+	    check = driver.find_element_by_xpath(xpath_heyamei)
 	    check.click()
 	    zansitu = driver.find_element_by_xpath('//*[@id="groupSsStatusFlgOff"]')
 	    zansitu.click()
@@ -102,9 +103,10 @@ def kansi():
 	    WebDriverWait(driver, 10).until(lambda d: len(d.window_handles) > 1)
 	    print(len(driver.window_handles))
 	
+	    driver.switch_to.window(driver.window_handles[1])
 	    nettype = driver.find_element_by_xpath('//*[@id="gBodyPopup"]/div/div[2]/ul/li[2]/a')
 	    nettype.click()
-	    check = driver.find_element_by_xpath('xpath_heyamei')
+	    check = driver.find_element_by_xpath(xpath_heyamei)
 	    check.click()
 	    sousin0 = driver.find_element_by_xpath('//*[@id="gBodyPopup"]/div/div[4]/ul/li[2]/a')
 	    sousin0.click()
@@ -156,106 +158,107 @@ def kansi():
 	                                                        hantei1(aa ,nn ,nsyamei)
 	                                                    else:
 	                                                        hantei1(aa ,nn ,nsyamei)
-	                                            if ll + aa >= 0:
-	                                                ll += aa
-	                                                sendkey(lsyamei, ll)
-	                                            elif ll > 0 and ll + aa < 0:
-	                                                sendkey(lsyamei, 0)
-	                                                aa += ll
-	                                                hantei2(aa ,mm ,msyamei)
+	                                                if ll + aa >= 0:
+	                                                    ll += aa
+	                                                    sendkey(lsyamei, ll)
+	                                                elif ll > 0 and ll + aa < 0:
+	                                                    sendkey(lsyamei, 0)
+	                                                    aa += ll
+	                                                    hantei2(aa ,mm ,msyamei)
+	                                                else:
+	                                                    hantei2(aa ,mm ,msyamei)
+	                                            if kk + aa >= 0:
+	                                                kk += aa
+	                                                sendkey(ksyamei, kk)
+	                                            elif kk > 0 and kk + aa < 0:
+	                                                sendkey(ksyamei, 0)
+	                                                aa += kk
+	                                                hantei3(aa ,ll ,lsyamei)
 	                                            else:
-	                                                hantei2(aa ,mm ,msyamei)
-	                                        if kk + aa >= 0:
-	                                            kk += aa
-	                                            sendkey(ksyamei, kk)
-	                                        elif kk > 0 and kk + aa < 0:
-	                                            sendkey(ksyamei, 0)
-	                                            aa += kk
-	                                            hantei3(aa ,ll ,lsyamei)
+	                                                hantei3(aa ,ll ,lsyamei)
+	                                        if jj + aa >= 0:
+	                                            jj += aa
+	                                            sendkey(jsyamei, jj)
+	                                        elif jj > 0 and jj + aa < 0:
+	                                            sendkey(jsyamei, 0)
+	                                            aa += jj
+	                                            hantei4(aa ,kk ,ksyamei)
 	                                        else:
-	                                            hantei3(aa ,ll ,lsyamei)
-	                                    if jj + aa >= 0:
-	                                        jj += aa
-	                                        sendkey(jsyamei, jj)
-	                                    elif jj > 0 and jj + aa < 0:
-	                                        sendkey(jsyamei, 0)
-	                                        aa += jj
-	                                        hantei4(aa ,kk ,ksyamei)
+	                                            hantei4(aa ,kk ,ksyamei)
+	                                    if ii + aa >= 0:
+	                                        ii += aa
+	                                        sendkey(isyamei, ii)
+	                                    elif ii > 0 and ii + aa < 0:
+	                                        sendkey(isyamei, 0)
+	                                        aa += ii
+	                                        hantei5(aa ,jj ,jsyamei)
 	                                    else:
-	                                        hantei4(aa ,kk ,ksyamei)
-	                                if ii + aa >= 0:
-	                                    ii += aa
-	                                    sendkey(isyamei, ii)
-	                                elif ii > 0 and ii + aa < 0:
-	                                    sendkey(isyamei, 0)
-	                                    aa += ii
-	                                    hantei5(aa ,jj ,jsyamei)
+	                                        hantei5(aa ,jj ,jsyamei)
+	                                if hh + aa >= 0:
+	                                    hh += aa
+	                                    sendkey(hsyamei, hh)
+	                                elif hh > 0 and hh + aa < 0:
+	                                    sendkey(hsyamei, 0)
+	                                    aa += hh
+	                                    hantei6(aa ,ii ,isyamei)
 	                                else:
-	                                    hantei5(aa ,jj ,jsyamei)
-	                            if hh + aa >= 0:
-	                                hh += aa
-	                                sendkey(hsyamei, hh)
-	                            elif hh > 0 and hh + aa < 0:
-	                                sendkey(hsyamei, 0)
-	                                aa += hh
-	                                hantei6(aa ,ii ,isyamei)
+	                                    hantei6(aa ,ii ,isyamei)
+	                            if gg + aa >= 0:
+	                                gg += aa
+	                                sendkey(gsyamei, gg)
+	                            elif gg > 0 and gg + aa < 0:
+	                                sendkey(gsyamei, 0)
+	                                aa += gg
+	                                hantei7(aa ,hh ,hsyamei)
 	                            else:
-	                                hantei6(aa ,ii ,isyamei)
-	                        if gg + aa >= 0:
-	                            gg += aa
-	                            sendkey(gsyamei, gg)
-	                        elif gg > 0 and gg + aa < 0:
-	                            sendkey(gsyamei, 0)
-	                            aa += gg
-	                            hantei7(aa ,hh ,hsyamei)
+	                                hantei7(aa ,hh ,hsyamei)
+	                        if ff + aa >= 0:
+	                            ff += aa
+	                            sendkey(fsyamei, ff)
+	                        elif ff > 0 and ff + aa < 0:
+	                            sendkey(fsyamei, 0)
+	                            aa += ff
+	                            hantei8(aa ,gg ,gsyamei)
 	                        else:
-	                            hantei7(aa ,hh ,hsyamei)
-	                    if ff + aa >= 0:
-	                        ff += aa
-	                        sendkey(fsyamei, ff)
-	                    elif ff > 0 and ff + aa < 0:
-	                        sendkey(fsyamei, 0)
-	                        aa += ff
-	                        hantei8(aa ,gg ,gsyamei)
+	                            hantei8(aa ,gg ,gsyamei)
+	                    if ee + aa >= 0:
+	                        ee += aa
+	                        sendkey(esyamei, ee)
+	                    elif ee > 0 and ee + aa < 0:
+	                        sendkey(esyamei, 0)
+	                        aa += ee
+	                        hantei9(aa ,ff ,fsyamei)
 	                    else:
-	                        hantei8(aa ,gg ,gsyamei)
-	                if ee + aa >= 0:
-	                    ee += aa
-	                    sendkey(esyamei, ee)
-	                elif ee > 0 and ee + aa < 0:
-	                    sendkey(esyamei, 0)
-	                    aa += ee
-	                    hantei9(aa ,ff ,fsyamei)
+	                        hantei9(aa ,ff ,fsyamei)
+	                if dd + aa >= 0:
+	                    dd += aa
+	                    sendkey(dsyamei, dd)
+	                elif dd > 0 and dd + aa < 0:
+	                    sendkey(dsyamei, 0)
+	                    aa += dd
+	                    hantei10(aa ,ee ,esyamei)
 	                else:
-	                    hantei9(aa ,ff ,fsyamei)
-	            if dd + aa >= 0:
-	                dd += aa
-	                sendkey(dsyamei, dd)
-	            elif dd > 0 and dd + aa < 0:
-	                sendkey(dsyamei, 0)
-	                aa += dd
-	                hantei10(aa ,ee ,esyamei)
+	                    hantei10(aa ,ee ,esyamei)
+	            if cc + aa >= 0:
+	                cc += aa
+	                sendkey(csyamei, cc)
+	            elif cc > 0 and cc + aa < 0:
+	                sendkey(csyamei, 0)
+	                aa += cc
+	                hantei11(aa ,dd ,dsyamei)
 	            else:
-	                hantei10(aa ,ee ,esyamei)
-	        if cc + aa >= 0:
-	            cc += aa
-	            sendkey(csyamei, cc)
-	        elif cc > 0 and cc + aa < 0:
-	            sendkey(csyamei, 0)
-	            aa += cc
-	            hantei11(aa ,dd ,dsyamei)
+	                hantei11(aa ,dd ,dsyamei)
+	        if bb + aa >= 0:
+	            bb += aa
+	            sendkey(bsyamei, bb)
+	        elif bb > 0 and bb + aa < 0:
+	            sendkey(bsyamei, 0)
+	            aa += bb
+	            hantei12(aa ,cc ,csyamei)
 	        else:
-	            hantei11(aa ,dd ,dsyamei)
-	    if bb + aa >= 0:
-	        bb += aa
-	        sendkey(bsyamei, bb)
-	    elif bb > 0 and bb + aa < 0:
-	        sendkey(bsyamei, 0)
-	        aa += bb
-	        hantei12(aa ,cc ,csyamei)
-	    else:
-	        hantei12(aa ,cc ,csyamei)
-	        
+	            hantei12(aa ,cc ,csyamei)
+	    hantei13(aa , bb ,bsyamei)
+	
 	x = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15']
 	for z in x:
 	    #和室15畳 
@@ -326,34 +329,55 @@ def kansi():
 	    if a < 0:
 	        henkou(a, b, gentei, c, jtb, d, kinki, e, nihon, f, top, g, ANA, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, m, jtb01, n, toku01)
 	        ataisousin()
-	        ############################ここらへんから######################
-            
+	        net_mainasu(z, '//*[@id="checkBoxNetRoomTypeGroupGrp1_0"]')
 	    if b < 0:
 	        henkou(b, a, wasitunet, c, jtb, d, kinki, e, nihon, f, top, g, ANA, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, m, jtb01, n, toku01)
+	        ataisousin()
+	        net_mainasu(z, '//*[@id="checkBoxNetRoomTypeGroupGrp10_0"]')
 	    if c < 0:
 	        henkou(c, a, wasitunet, b, gentei, d, kinki, e, nihon, f, top, g, ANA, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, m, jtb01, n, toku01)
+	        ataisousin()
+	        ryokou_mainasu(z, '//*[@id="checkBoxRelAgentRoomTypeGrp1_0"]')
 	    if d < 0:
 	        henkou(d, a, wasitunet, b, gentei, c, jtb, e, nihon, f, top, g, ANA, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, m, jtb01, n, toku01)
+	        ataisousin()
+	        ryokou_mainasu(z, '//*[@id="checkBoxRelAgentRoomTypeGrp1_1"]')
 	    if e < 0:
 	        henkou(e, a, wasitunet, b, gentei, c, jtb, d, kinki, f, top, g, ANA, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, m, jtb01, n, toku01)
+	        ataisousin()
+	        ryokou_mainasu(z, '//*[@id="checkBoxRelAgentRoomTypeGrp1_2"]')
 	    if f < 0:
 	        henkou(f, a, wasitunet, b, gentei, c, jtb, d, kinki, e, nihon, g, ANA, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, m, jtb01, n, toku01)
+	        ataisousin()
+	        ryokou_mainasu(z, '//*[@id="checkBoxRelAgentRoomTypeGrp1_3"]')
 	    if g < 0:
 	        henkou(g, a, wasitunet, b, gentei, c, jtb, d, kinki, e, nihon, f, top, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, m, jtb01, n, toku01)
+	        ataisousin()
+	        ryokou_mainasu(z, '//*[@id="checkBoxRelAgentRoomTypeGrp1_4"]')
 	    if h < 0:
 	        henkou(h, a, wasitunet, b, gentei, c, jtb, d, kinki, e, nihon, f, top, g, ANA, i, JR52, j, upgrade, k, jyuntoku, l, toku05, m, jtb01, n, toku01)
 	    if i < 0:
 	        henkou(i, a, wasitunet, b, gentei, c, jtb, d, kinki, e, nihon, f, top, g, ANA, h, JR51, j, upgrade, k, jyuntoku, l, toku05, m, jtb01, n, toku01)
 	    if j < 0:
 	        henkou(j, a, wasitunet, b, gentei, c, jtb, d, kinki, e, nihon, f, top, g, ANA, h, JR51, i, JR52, k, jyuntoku, l, toku05, m, jtb01, n, toku01)
+	        ataisousin()
+	        net_mainasu(z, '//*[@id="checkBoxNetRoomTypeGroupGrp9_0"]')
 	    if k < 0:
 	        henkou(k, a, wasitunet, b, gentei, c, jtb, d, kinki, e, nihon, f, top, g, ANA, h, JR51, i, JR52, j, upgrade, l, toku05, m, jtb01, n, toku01)
+	        ataisousin()
+	        net_mainasu(z, '//*[@id="checkBoxNetRoomTypeGroupGrp2_0"]')
 	    if l < 0:
 	        henkou(l, a, wasitunet, b, gentei, c, jtb, d, kinki, e, nihon, f, top, g, ANA, h, JR51, i, JR52, j, upgrade, k, jyuntoku, m, jtb01, n, toku01)
+	        ataisousin()
+	        net_mainasu(z, '//*[@id="checkBoxNetRoomTypeGroupGrp3_0"]')
 	    if m < 0:
 	        henkou(m, a, wasitunet, b, gentei, c, jtb, d, kinki, e, nihon, f, top, g, ANA, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, n, toku01)
+	        ataisousin()
+	        ryokou_mainasu(z, '//*[@id="checkBoxRelAgentRoomTypeGrp3_0"]')
 	    if n < 0:
 	        henkou(n, a, wasitunet, b, gentei, c, jtb, d, kinki, e, nihon, f, top, g, ANA, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, m, jtb01)
+	        ataisousin()
+	        net_mainasu(z, '//*[@id="checkBoxNetRoomTypeGroupGrp4_0"]')
 
 ##############関数フェーズ終了###################
 kansi()
@@ -400,7 +424,68 @@ def kansi2():
 	    driver.close()
 	    time.sleep(5)
 	    driver.switch_to.window(driver.window_handles[0])
-	    
+	#ネットマイナス削除##################
+	def net_mainasu(z, xpath_heyamei):
+	    nichiji = driver.find_element_by_xpath('//*[@id="dataHeaderInner"]/div[2]/table/tbody/tr/td[' + z + ']/div/a/div')
+	    nichiji.click()
+	
+	    WebDriverWait(driver, 10).until(lambda d: len(d.window_handles) > 1)
+	    print(len(driver.window_handles))
+	
+	    driver.switch_to.window(driver.window_handles[1])	    
+	    nettype = driver.find_element_by_xpath('//*[@id="gBodyPopup"]/div/div[2]/ul/li[3]/a')
+	    nettype.click()
+	    check = driver.find_element_by_xpath(xpath_heyamei)
+	    check.click()
+	    zansitu = driver.find_element_by_xpath('//*[@id="groupSsStatusFlgOff"]')
+	    zansitu.click()
+	    sousin0 = driver.find_element_by_xpath('//*[@id="sendBtn"]')
+	    sousin0.click()
+	
+	    #指定したdriverに対して最大で10秒間待つように設定する
+	    wait = WebDriverWait(driver, 10)
+	    #Alertが表示されるまで待機するよう設定する
+	    wait.until(expected_conditions.alert_is_present())
+	    #3秒間待機する（Alertが表示されていることを確認するため）
+	    time.sleep(5)
+	    #AlertのOKボタンを押下する
+	    Alert(driver).accept()
+	    time.sleep(5)
+	    WebDriverWait(driver, 10).until(lambda d: len(d.window_handles) > 1)
+	    driver.switch_to.window(driver.window_handles[1])
+	    driver.close()
+	    time.sleep(5)
+	    driver.switch_to.window(driver.window_handles[0])
+	#旅行会社販売先削除##################
+	def ryokou_mainasu(z, xpath_heyamei):
+	    nichiji = driver.find_element_by_xpath('//*[@id="dataHeaderInner"]/div[2]/table/tbody/tr/td[' + z + ']/div/a/div')
+	    nichiji.click()
+	
+	    WebDriverWait(driver, 10).until(lambda d: len(d.window_handles) > 1)
+	    print(len(driver.window_handles))
+	
+	    driver.switch_to.window(driver.window_handles[1])
+	    nettype = driver.find_element_by_xpath('//*[@id="gBodyPopup"]/div/div[2]/ul/li[2]/a')
+	    nettype.click()
+	    check = driver.find_element_by_xpath(xpath_heyamei)
+	    check.click()
+	    sousin0 = driver.find_element_by_xpath('//*[@id="gBodyPopup"]/div/div[4]/ul/li[2]/a')
+	    sousin0.click()
+	
+	    #指定したdriverに対して最大で10秒間待つように設定する
+	    wait = WebDriverWait(driver, 10)
+	    #Alertが表示されるまで待機するよう設定する
+	    wait.until(expected_conditions.alert_is_present())
+	    #3秒間待機する（Alertが表示されていることを確認するため）
+	    time.sleep(5)
+	    #AlertのOKボタンを押下する
+	    Alert(driver).accept()
+	    time.sleep(5)
+	    WebDriverWait(driver, 10).until(lambda d: len(d.window_handles) > 1)
+	    driver.switch_to.window(driver.window_handles[1])
+	    driver.close()
+	    time.sleep(5)
+	    driver.switch_to.window(driver.window_handles[0])
 	###########判定1###################
 	def henkou(aa ,bb ,bsyamei, cc , csyamei, dd ,dsyamei ,ee ,esyamei ,ff ,fsyamei ,gg ,gsyamei ,hh , hsyamei, ii ,isyamei, jj ,jsyamei ,kk ,ksyamei ,ll ,lsyamei ,mm ,msyamei ,nn ,nsyamei ):
 	    def hantei13(aa , bb ,bsyamei):
@@ -433,123 +518,123 @@ def kansi2():
 	                                                        hantei1(aa ,nn ,nsyamei)
 	                                                    else:
 	                                                        hantei1(aa ,nn ,nsyamei)
-	                                            if ll + aa >= 0:
-	                                                ll += aa
-	                                                sendkey(lsyamei, ll)
-	                                            elif ll > 0 and ll + aa < 0:
-	                                                sendkey(lsyamei, 0)
-	                                                aa += ll
-	                                                hantei2(aa ,mm ,msyamei)
+	                                                if ll + aa >= 0:
+	                                                    ll += aa
+	                                                    sendkey(lsyamei, ll)
+	                                                elif ll > 0 and ll + aa < 0:
+	                                                    sendkey(lsyamei, 0)
+	                                                    aa += ll
+	                                                    hantei2(aa ,mm ,msyamei)
+	                                                else:
+	                                                    hantei2(aa ,mm ,msyamei)
+	                                            if kk + aa >= 0:
+	                                                kk += aa
+	                                                sendkey(ksyamei, kk)
+	                                            elif kk > 0 and kk + aa < 0:
+	                                                sendkey(ksyamei, 0)
+	                                                aa += kk
+	                                                hantei3(aa ,ll ,lsyamei)
 	                                            else:
-	                                                hantei2(aa ,mm ,msyamei)
-	                                        if kk + aa >= 0:
-	                                            kk += aa
-	                                            sendkey(ksyamei, kk)
-	                                        elif kk > 0 and kk + aa < 0:
-	                                            sendkey(ksyamei, 0)
-	                                            aa += kk
-	                                            hantei3(aa ,ll ,lsyamei)
+	                                                hantei3(aa ,ll ,lsyamei)
+	                                        if jj + aa >= 0:
+	                                            jj += aa
+	                                            sendkey(jsyamei, jj)
+	                                        elif jj > 0 and jj + aa < 0:
+	                                            sendkey(jsyamei, 0)
+	                                            aa += jj
+	                                            hantei4(aa ,kk ,ksyamei)
 	                                        else:
-	                                            hantei3(aa ,ll ,lsyamei)
-	                                    if jj + aa >= 0:
-	                                        jj += aa
-	                                        sendkey(jsyamei, jj)
-	                                    elif jj > 0 and jj + aa < 0:
-	                                        sendkey(jsyamei, 0)
-	                                        aa += jj
-	                                        hantei4(aa ,kk ,ksyamei)
+	                                            hantei4(aa ,kk ,ksyamei)
+	                                    if ii + aa >= 0:
+	                                        ii += aa
+	                                        sendkey(isyamei, ii)
+	                                    elif ii > 0 and ii + aa < 0:
+	                                        sendkey(isyamei, 0)
+	                                        aa += ii
+	                                        hantei5(aa ,jj ,jsyamei)
 	                                    else:
-	                                        hantei4(aa ,kk ,ksyamei)
-	                                if ii + aa >= 0:
-	                                    ii += aa
-	                                    sendkey(isyamei, ii)
-	                                elif ii > 0 and ii + aa < 0:
-	                                    sendkey(isyamei, 0)
-	                                    aa += ii
-	                                    hantei5(aa ,jj ,jsyamei)
+	                                        hantei5(aa ,jj ,jsyamei)
+	                                if hh + aa >= 0:
+	                                    hh += aa
+	                                    sendkey(hsyamei, hh)
+	                                elif hh > 0 and hh + aa < 0:
+	                                    sendkey(hsyamei, 0)
+	                                    aa += hh
+	                                    hantei6(aa ,ii ,isyamei)
 	                                else:
-	                                    hantei5(aa ,jj ,jsyamei)
-	                            if hh + aa >= 0:
-	                                hh += aa
-	                                sendkey(hsyamei, hh)
-	                            elif hh > 0 and hh + aa < 0:
-	                                sendkey(hsyamei, 0)
-	                                aa += hh
-	                                hantei6(aa ,ii ,isyamei)
+	                                    hantei6(aa ,ii ,isyamei)
+	                            if gg + aa >= 0:
+	                                gg += aa
+	                                sendkey(gsyamei, gg)
+	                            elif gg > 0 and gg + aa < 0:
+	                                sendkey(gsyamei, 0)
+	                                aa += gg
+	                                hantei7(aa ,hh ,hsyamei)
 	                            else:
-	                                hantei6(aa ,ii ,isyamei)
-	                        if gg + aa >= 0:
-	                            gg += aa
-	                            sendkey(gsyamei, gg)
-	                        elif gg > 0 and gg + aa < 0:
-	                            sendkey(gsyamei, 0)
-	                            aa += gg
-	                            hantei7(aa ,hh ,hsyamei)
+	                                hantei7(aa ,hh ,hsyamei)
+	                        if ff + aa >= 0:
+	                            ff += aa
+	                            sendkey(fsyamei, ff)
+	                        elif ff > 0 and ff + aa < 0:
+	                            sendkey(fsyamei, 0)
+	                            aa += ff
+	                            hantei8(aa ,gg ,gsyamei)
 	                        else:
-	                            hantei7(aa ,hh ,hsyamei)
-	                    if ff + aa >= 0:
-	                        ff += aa
-	                        sendkey(fsyamei, ff)
-	                    elif ff > 0 and ff + aa < 0:
-	                        sendkey(fsyamei, 0)
-	                        aa += ff
-	                        hantei8(aa ,gg ,gsyamei)
+	                            hantei8(aa ,gg ,gsyamei)
+	                    if ee + aa >= 0:
+	                        ee += aa
+	                        sendkey(esyamei, ee)
+	                    elif ee > 0 and ee + aa < 0:
+	                        sendkey(esyamei, 0)
+	                        aa += ee
+	                        hantei9(aa ,ff ,fsyamei)
 	                    else:
-	                        hantei8(aa ,gg ,gsyamei)
-	                if ee + aa >= 0:
-	                    ee += aa
-	                    sendkey(esyamei, ee)
-	                elif ee > 0 and ee + aa < 0:
-	                    sendkey(esyamei, 0)
-	                    aa += ee
-	                    hantei9(aa ,ff ,fsyamei)
+	                        hantei9(aa ,ff ,fsyamei)
+	                if dd + aa >= 0:
+	                    dd += aa
+	                    sendkey(dsyamei, dd)
+	                elif dd > 0 and dd + aa < 0:
+	                    sendkey(dsyamei, 0)
+	                    aa += dd
+	                    hantei10(aa ,ee ,esyamei)
 	                else:
-	                    hantei9(aa ,ff ,fsyamei)
-	            if dd + aa >= 0:
-	                dd += aa
-	                sendkey(dsyamei, dd)
-	            elif dd > 0 and dd + aa < 0:
-	                sendkey(dsyamei, 0)
-	                aa += dd
-	                hantei10(aa ,ee ,esyamei)
+	                    hantei10(aa ,ee ,esyamei)
+	            if cc + aa >= 0:
+	                cc += aa
+	                sendkey(csyamei, cc)
+	            elif cc > 0 and cc + aa < 0:
+	                sendkey(csyamei, 0)
+	                aa += cc
+	                hantei11(aa ,dd ,dsyamei)
 	            else:
-	                hantei10(aa ,ee ,esyamei)
-	        if cc + aa >= 0:
-	            cc += aa
-	            sendkey(csyamei, cc)
-	        elif cc > 0 and cc + aa < 0:
-	            sendkey(csyamei, 0)
-	            aa += cc
-	            hantei11(aa ,dd ,dsyamei)
+	                hantei11(aa ,dd ,dsyamei)
+	        if bb + aa >= 0:
+	            bb += aa
+	            sendkey(bsyamei, bb)
+	        elif bb > 0 and bb + aa < 0:
+	            sendkey(bsyamei, 0)
+	            aa += bb
+	            hantei12(aa ,cc ,csyamei)
 	        else:
-	            hantei11(aa ,dd ,dsyamei)
-	    if bb + aa >= 0:
-	        bb += aa
-	        sendkey(bsyamei, bb)
-	    elif bb > 0 and bb + aa < 0:
-	        sendkey(bsyamei, 0)
-	        aa += bb
-	        hantei12(aa ,cc ,csyamei)
-	    else:
-	        hantei12(aa ,cc ,csyamei)
+	            hantei12(aa ,cc ,csyamei)
+	    hantei13(aa , bb ,bsyamei)
 	###########判定2###################
-	def henkou2(aa ,gg ,gsyamei ,hh , hsyamei, ii ,isyamei, jj ,jsyamei ,kk ,ksyamei ,ll ,lsyamei ,mm ,msyamei ,nn ,nsyamei ):
-		def hantei8(aa , gg ,gsyamei):
-			def hantei7(aa , hh ,hsyamei):
-				def hantei6(aa , ii ,isyamei):
-					def hantei5(aa , jj ,jsyamei):
-						def hantei4(aa , kk ,ksyamei):
-							def hantei3(aa , ll ,lsyamei):
-								def hantei2(aa ,mm ,msyamei):
-									def hantei1(aa ,nn ,nsyamei):
-										if nn + aa >= 0:
-											nn += aa
-											sendkey(nsyamei, nn)
-										elif nn > 0 and nn + aa < 0:
-											sendkey(nsyamei, 0)
-											aa += nn
-										else:
-											print("mainasu syori dekimasen!!!!!!!!!!!!!!!!!!!!")
+	def henkou2(aa ,hh , hsyamei, ii ,isyamei, jj ,jsyamei ,kk ,ksyamei ,ll ,lsyamei ,mm ,msyamei ,nn ,nsyamei ):
+		def hantei7(aa , hh ,hsyamei):
+			def hantei6(aa , ii ,isyamei):
+				def hantei5(aa , jj ,jsyamei):
+					def hantei4(aa , kk ,ksyamei):
+						def hantei3(aa , ll ,lsyamei):
+							def hantei2(aa ,mm ,msyamei):
+								def hantei1(aa ,nn ,nsyamei):
+									if nn + aa >= 0:
+										nn += aa
+										sendkey(nsyamei, nn)
+									elif nn > 0 and nn + aa < 0:
+										sendkey(nsyamei, 0)
+										aa += nn
+									else:
+										print("mainasu syori dekimasen!!!!!!!!!!!!!!!!!!!!")
 								if mm + aa >= 0:
 									mm += aa
 									sendkey(msyamei, mm)
@@ -604,34 +689,25 @@ def kansi2():
 				hantei6(aa ,ii ,isyamei)
 			else:
 				hantei6(aa ,ii ,isyamei)
-		if gg + aa >= 0:
-			gg += aa
-			sendkey(gsyamei, gg)
-		elif gg > 0 and gg + aa < 0:
-			sendkey(gsyamei, 0)
-			aa += gg
-			hantei7(aa ,hh ,hsyamei)
-		else:
-			hantei7(aa ,hh ,hsyamei)
+		hantei7(aa , hh ,hsyamei)
 	###########判定3###################
-	def henkou3(aa ,ff ,fsyamei ,gg ,gsyamei ,hh , hsyamei, ii ,isyamei, jj ,jsyamei ,kk ,ksyamei ,ll ,lsyamei ,mm ,msyamei ,nn ,nsyamei ):
-		def hantei9(aa , ff ,fsyamei):
-			def hantei8(aa , gg ,gsyamei):
-				def hantei7(aa , hh ,hsyamei):
-					def hantei6(aa , ii ,isyamei):
-						def hantei5(aa , jj ,jsyamei):
-							def hantei4(aa , kk ,ksyamei):
-								def hantei3(aa , ll ,lsyamei):
-									def hantei2(aa ,mm ,msyamei):
-										def hantei1(aa ,nn ,nsyamei):
-											if nn + aa >= 0:
-												nn += aa
-												sendkey(nsyamei, nn)
-											elif nn > 0 and nn + aa < 0:
-												sendkey(nsyamei, 0)
-												aa += nn
-											else:
-												print("mainasu syori dekimasen!!!!!!!!!!!!!!!!!!!!")
+	def henkou3(aa ,gg ,gsyamei ,hh , hsyamei, ii ,isyamei, jj ,jsyamei ,kk ,ksyamei ,ll ,lsyamei ,mm ,msyamei ,nn ,nsyamei ):
+		def hantei8(aa , gg ,gsyamei):
+			def hantei7(aa , hh ,hsyamei):
+				def hantei6(aa , ii ,isyamei):
+					def hantei5(aa , jj ,jsyamei):
+						def hantei4(aa , kk ,ksyamei):
+							def hantei3(aa , ll ,lsyamei):
+								def hantei2(aa ,mm ,msyamei):
+									def hantei1(aa ,nn ,nsyamei):
+										if nn + aa >= 0:
+											nn += aa
+											sendkey(nsyamei, nn)
+										elif nn > 0 and nn + aa < 0:
+											sendkey(nsyamei, 0)
+											aa += nn
+										else:
+											print("mainasu syori dekimasen!!!!!!!!!!!!!!!!!!!!")
 									if mm + aa >= 0:
 										mm += aa
 										sendkey(msyamei, mm)
@@ -695,16 +771,7 @@ def kansi2():
 				hantei7(aa ,hh ,hsyamei)
 			else:
 				hantei7(aa ,hh ,hsyamei)
-		if ff + aa >= 0:
-			ff += aa
-			sendkey(fsyamei, ff)
-		elif ff > 0 and ff + aa < 0:
-			sendkey(fsyamei, 0)
-			aa += ff
-			hantei8(aa ,gg ,gsyamei)
-		else:
-			hantei8(aa ,gg ,gsyamei)
-
+		hantei8(aa , gg ,gsyamei)
 
 	x = ['1', '2', '3', '4']
 	for z in x:
@@ -775,33 +842,57 @@ def kansi2():
 	    #a, wasitunet, b, gentei, c, jtb, d, kinki, e, nihon, f, top, g, ANA, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, m, jtb01, n, toku01)
 	    if a < 0:
 	        henkou(a, b, gentei, c, jtb, d, kinki, e, nihon, f, top, g, ANA, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, m, jtb01, n, toku01)
-            
+	        ataisousin()
+	        net_mainasu(z, '//*[@id="checkBoxNetRoomTypeGroupGrp1_0"]')
 	    if b < 0:
 	        henkou(b, a, wasitunet, c, jtb, d, kinki, e, nihon, f, top, g, ANA, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, m, jtb01, n, toku01)
+	        ataisousin()
+	        net_mainasu(z, '//*[@id="checkBoxNetRoomTypeGroupGrp10_0"]')
 	    if c < 0:
 	        henkou(c, a, wasitunet, b, gentei, d, kinki, e, nihon, f, top, g, ANA, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, m, jtb01, n, toku01)
+	        ataisousin()
+	        ryokou_mainasu(z, '//*[@id="checkBoxRelAgentRoomTypeGrp1_0"]')
 	    if d < 0:
 	        henkou(d, a, wasitunet, b, gentei, c, jtb, e, nihon, f, top, g, ANA, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, m, jtb01, n, toku01)
+	        ataisousin()
+	        ryokou_mainasu(z, '//*[@id="checkBoxRelAgentRoomTypeGrp1_1"]')
 	    if e < 0:
 	        henkou(e, a, wasitunet, b, gentei, c, jtb, d, kinki, f, top, g, ANA, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, m, jtb01, n, toku01)
+	        ataisousin()
+	        ryokou_mainasu(z, '//*[@id="checkBoxRelAgentRoomTypeGrp1_2"]')
 	    if f < 0:
 	        henkou(f, a, wasitunet, b, gentei, c, jtb, d, kinki, e, nihon, g, ANA, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, m, jtb01, n, toku01)
+	        ataisousin()
+	        ryokou_mainasu(z, '//*[@id="checkBoxRelAgentRoomTypeGrp1_3"]')
 	    if g < 0:
 	        henkou(g, a, wasitunet, b, gentei, c, jtb, d, kinki, e, nihon, f, top, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, m, jtb01, n, toku01)
+	        ataisousin()
+	        ryokou_mainasu(z, '//*[@id="checkBoxRelAgentRoomTypeGrp1_4"]')
 	    if h < 0:
 	        henkou(h, a, wasitunet, b, gentei, c, jtb, d, kinki, e, nihon, f, top, g, ANA, i, JR52, j, upgrade, k, jyuntoku, l, toku05, m, jtb01, n, toku01)
 	    if i < 0:
 	        henkou(i, a, wasitunet, b, gentei, c, jtb, d, kinki, e, nihon, f, top, g, ANA, h, JR51, j, upgrade, k, jyuntoku, l, toku05, m, jtb01, n, toku01)
 	    if j < 0:
 	        henkou(j, a, wasitunet, b, gentei, c, jtb, d, kinki, e, nihon, f, top, g, ANA, h, JR51, i, JR52, k, jyuntoku, l, toku05, m, jtb01, n, toku01)
+	        ataisousin()
+	        net_mainasu(z, '//*[@id="checkBoxNetRoomTypeGroupGrp9_0"]')
 	    if k < 0:
 	        henkou(k, a, wasitunet, b, gentei, c, jtb, d, kinki, e, nihon, f, top, g, ANA, h, JR51, i, JR52, j, upgrade, l, toku05, m, jtb01, n, toku01)
+	        ataisousin()
+	        net_mainasu(z, '//*[@id="checkBoxNetRoomTypeGroupGrp2_0"]')
 	    if l < 0:
 	        henkou(l, a, wasitunet, b, gentei, c, jtb, d, kinki, e, nihon, f, top, g, ANA, h, JR51, i, JR52, j, upgrade, k, jyuntoku, m, jtb01, n, toku01)
+	        ataisousin()
+	        net_mainasu(z, '//*[@id="checkBoxNetRoomTypeGroupGrp3_0"]')
 	    if m < 0:
 	        henkou(m, a, wasitunet, b, gentei, c, jtb, d, kinki, e, nihon, f, top, g, ANA, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, n, toku01)
+	        ataisousin()
+	        ryokou_mainasu(z, '//*[@id="checkBoxRelAgentRoomTypeGrp3_0"]')
 	    if n < 0:
 	        henkou(n, a, wasitunet, b, gentei, c, jtb, d, kinki, e, nihon, f, top, g, ANA, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, m, jtb01)
+	        ataisousin()
+	        net_mainasu(z, '//*[@id="checkBoxNetRoomTypeGroupGrp4_0"]')
+
 	x = ['5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15']
 	for z in x:
 	    #和室15畳 
@@ -870,34 +961,57 @@ def kansi2():
 
 	    #a, wasitunet, b, gentei, c, jtb, d, kinki, e, nihon, f, top, g, ANA, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, m, jtb01, n, toku01)
 	    if a < 0:
-	        henkou2(a, b, gentei, g, ANA, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, n, toku01)
-            
+	        henkou2(a, b, gentei, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, n, toku01)
+	        ataisousin()
+	        net_mainasu(z, '//*[@id="checkBoxNetRoomTypeGroupGrp1_0"]')
 	    if b < 0:
-	        henkou2(b, a, wasitunet, g, ANA, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, n, toku01)
+	        henkou2(b, a, wasitunet, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, n, toku01)
+	        ataisousin()
+	        net_mainasu(z, '//*[@id="checkBoxNetRoomTypeGroupGrp10_0"]')
 	    if c < 0:
-	        henkou3(c, a, wasitunet, b, gentei, g, ANA, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, n, toku01)
+	        henkou3(c, a, wasitunet, b, gentei, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, n, toku01)
+	        ataisousin()
+	        ryokou_mainasu(z, '//*[@id="checkBoxRelAgentRoomTypeGrp1_0"]')
 	    if d < 0:
-	        henkou3(d, a, wasitunet, b, gentei, g, ANA, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, n, toku01)
+	        henkou3(d, a, wasitunet, b, gentei, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, n, toku01)
+	        ataisousin()
+	        ryokou_mainasu(z, '//*[@id="checkBoxRelAgentRoomTypeGrp1_1"]')
 	    if e < 0:
-	        henkou3(e, a, wasitunet, b, gentei, g, ANA, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, n, toku01)
+	        henkou3(e, a, wasitunet, b, gentei, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, n, toku01)
+	        ataisousin()
+	        ryokou_mainasu(z, '//*[@id="checkBoxRelAgentRoomTypeGrp1_2"]')
 	    if f < 0:
-	        henkou3(f, a, wasitunet, b, gentei, g, ANA, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, n, toku01)
+	        henkou3(f, a, wasitunet, b, gentei, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, n, toku01)
+	        ataisousin()
+	        ryokou_mainasu(z, '//*[@id="checkBoxRelAgentRoomTypeGrp1_3"]')
 	    if g < 0:
-	        henkou2(g, a, wasitunet, b, gentei, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, n, toku01)
+	        henkou3(g, a, wasitunet, b, gentei, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, n, toku01)
+	        ataisousin()
+	        ryokou_mainasu(z, '//*[@id="checkBoxRelAgentRoomTypeGrp1_4"]')
 	    if h < 0:
-	        henkou2(h, a, wasitunet, b, gentei, g, ANA, i, JR52, j, upgrade, k, jyuntoku, l, toku05, n, toku01)
+	        henkou2(h, a, wasitunet, b, gentei, i, JR52, j, upgrade, k, jyuntoku, l, toku05, n, toku01)
 	    if i < 0:
-	        henkou2(i, a, wasitunet, b, gentei, g, ANA, h, JR51, j, upgrade, k, jyuntoku, l, toku05, n, toku01)
+	        henkou2(i, a, wasitunet, b, gentei, h, JR51, j, upgrade, k, jyuntoku, l, toku05, n, toku01)
 	    if j < 0:
-	        henkou2(j, a, wasitunet, b, gentei, g, ANA, h, JR51, i, JR52, k, jyuntoku, l, toku05, n, toku01)
+	        henkou2(j, a, wasitunet, b, gentei, h, JR51, i, JR52, k, jyuntoku, l, toku05, n, toku01)
+	        ataisousin()
+	        net_mainasu(z, '//*[@id="checkBoxNetRoomTypeGroupGrp9_0"]')
 	    if k < 0:
-	        henkou2(k, a, wasitunet, b, gentei, g, ANA, h, JR51, i, JR52, j, upgrade, l, toku05, n, toku01)
+	        henkou2(k, a, wasitunet, b, gentei, h, JR51, i, JR52, j, upgrade, l, toku05, n, toku01)
+	        ataisousin()
+	        net_mainasu(z, '//*[@id="checkBoxNetRoomTypeGroupGrp2_0"]')
 	    if l < 0:
-	        henkou2(l, a, wasitunet, b, gentei, g, ANA, h, JR51, i, JR52, j, upgrade, k, jyuntoku, n, toku01)
+	        henkou2(l, a, wasitunet, b, gentei, h, JR51, i, JR52, j, upgrade, k, jyuntoku, n, toku01)
+	        ataisousin()
+	        net_mainasu(z, '//*[@id="checkBoxNetRoomTypeGroupGrp3_0"]')
 	    if m < 0:
-	        henkou3(m, a, wasitunet, b, gentei, g, ANA, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, n, toku01)
+	        henkou3(m, a, wasitunet, b, gentei, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, n, toku01)
+	        ataisousin()
+	        ryokou_mainasu(z, '//*[@id="checkBoxRelAgentRoomTypeGrp3_0"]')
 	    if n < 0:
-	        henkou2(n, a, wasitunet, b, gentei, g, ANA, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05)
+	        henkou2(n, a, wasitunet, b, gentei, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05)
+	        ataisousin()
+	        net_mainasu(z, '//*[@id="checkBoxNetRoomTypeGroupGrp4_0"]')
 ##############関数フェーズ終了###################
 kansi2()
 yoku2syu = driver.find_element_by_xpath('//*[@id="dataHeaderInner"]/div[1]/div[1]/ul/li[6]/a/span')
@@ -943,25 +1057,85 @@ def kansi3():
 	    driver.close()
 	    time.sleep(5)
 	    driver.switch_to.window(driver.window_handles[0])
-	    
+	#ネットマイナス削除##################
+	def net_mainasu(z, xpath_heyamei):
+	    nichiji = driver.find_element_by_xpath('//*[@id="dataHeaderInner"]/div[2]/table/tbody/tr/td[' + z + ']/div/a/div')
+	    nichiji.click()
+	
+	    WebDriverWait(driver, 10).until(lambda d: len(d.window_handles) > 1)
+	    print(len(driver.window_handles))
+	
+	    driver.switch_to.window(driver.window_handles[1])	    
+	    nettype = driver.find_element_by_xpath('//*[@id="gBodyPopup"]/div/div[2]/ul/li[3]/a')
+	    nettype.click()
+	    check = driver.find_element_by_xpath(xpath_heyamei)
+	    check.click()
+	    zansitu = driver.find_element_by_xpath('//*[@id="groupSsStatusFlgOff"]')
+	    zansitu.click()
+	    sousin0 = driver.find_element_by_xpath('//*[@id="sendBtn"]')
+	    sousin0.click()
+	
+	    #指定したdriverに対して最大で10秒間待つように設定する
+	    wait = WebDriverWait(driver, 10)
+	    #Alertが表示されるまで待機するよう設定する
+	    wait.until(expected_conditions.alert_is_present())
+	    #3秒間待機する（Alertが表示されていることを確認するため）
+	    time.sleep(5)
+	    #AlertのOKボタンを押下する
+	    Alert(driver).accept()
+	    time.sleep(5)
+	    WebDriverWait(driver, 10).until(lambda d: len(d.window_handles) > 1)
+	    driver.switch_to.window(driver.window_handles[1])
+	    driver.close()
+	    time.sleep(5)
+	    driver.switch_to.window(driver.window_handles[0])
+	#旅行会社販売先削除##################
+	def ryokou_mainasu(z, xpath_heyamei):
+	    nichiji = driver.find_element_by_xpath('//*[@id="dataHeaderInner"]/div[2]/table/tbody/tr/td[' + z + ']/div/a/div')
+	    nichiji.click()
+	
+	    WebDriverWait(driver, 10).until(lambda d: len(d.window_handles) > 1)
+	    print(len(driver.window_handles))
+	
+	    driver.switch_to.window(driver.window_handles[1])
+	    nettype = driver.find_element_by_xpath('//*[@id="gBodyPopup"]/div/div[2]/ul/li[2]/a')
+	    nettype.click()
+	    check = driver.find_element_by_xpath(xpath_heyamei)
+	    check.click()
+	    sousin0 = driver.find_element_by_xpath('//*[@id="gBodyPopup"]/div/div[4]/ul/li[2]/a')
+	    sousin0.click()
+	
+	    #指定したdriverに対して最大で10秒間待つように設定する
+	    wait = WebDriverWait(driver, 10)
+	    #Alertが表示されるまで待機するよう設定する
+	    wait.until(expected_conditions.alert_is_present())
+	    #3秒間待機する（Alertが表示されていることを確認するため）
+	    time.sleep(5)
+	    #AlertのOKボタンを押下する
+	    Alert(driver).accept()
+	    time.sleep(5)
+	    WebDriverWait(driver, 10).until(lambda d: len(d.window_handles) > 1)
+	    driver.switch_to.window(driver.window_handles[1])
+	    driver.close()
+	    time.sleep(5)
+	    driver.switch_to.window(driver.window_handles[0])
 	###########判定2###################
-	def henkou2(aa ,gg ,gsyamei ,hh , hsyamei, ii ,isyamei, jj ,jsyamei ,kk ,ksyamei ,ll ,lsyamei ,mm ,msyamei ,nn ,nsyamei ):
-		def hantei8(aa , gg ,gsyamei):
-			def hantei7(aa , hh ,hsyamei):
-				def hantei6(aa , ii ,isyamei):
-					def hantei5(aa , jj ,jsyamei):
-						def hantei4(aa , kk ,ksyamei):
-							def hantei3(aa , ll ,lsyamei):
-								def hantei2(aa ,mm ,msyamei):
-									def hantei1(aa ,nn ,nsyamei):
-										if nn + aa >= 0:
-											nn += aa
-											sendkey(nsyamei, nn)
-										elif nn > 0 and nn + aa < 0:
-											sendkey(nsyamei, 0)
-											aa += nn
-										else:
-											print("mainasu syori dekimasen!!!!!!!!!!!!!!!!!!!!")
+	def henkou2(aa ,hh , hsyamei, ii ,isyamei, jj ,jsyamei ,kk ,ksyamei ,ll ,lsyamei ,mm ,msyamei ,nn ,nsyamei ):
+		def hantei7(aa , hh ,hsyamei):
+			def hantei6(aa , ii ,isyamei):
+				def hantei5(aa , jj ,jsyamei):
+					def hantei4(aa , kk ,ksyamei):
+						def hantei3(aa , ll ,lsyamei):
+							def hantei2(aa ,mm ,msyamei):
+								def hantei1(aa ,nn ,nsyamei):
+									if nn + aa >= 0:
+										nn += aa
+										sendkey(nsyamei, nn)
+									elif nn > 0 and nn + aa < 0:
+										sendkey(nsyamei, 0)
+										aa += nn
+									else:
+										print("mainasu syori dekimasen!!!!!!!!!!!!!!!!!!!!")
 								if mm + aa >= 0:
 									mm += aa
 									sendkey(msyamei, mm)
@@ -1016,34 +1190,25 @@ def kansi3():
 				hantei6(aa ,ii ,isyamei)
 			else:
 				hantei6(aa ,ii ,isyamei)
-		if gg + aa >= 0:
-			gg += aa
-			sendkey(gsyamei, gg)
-		elif gg > 0 and gg + aa < 0:
-			sendkey(gsyamei, 0)
-			aa += gg
-			hantei7(aa ,hh ,hsyamei)
-		else:
-			hantei7(aa ,hh ,hsyamei)
+		hantei7(aa , hh ,hsyamei)
 	###########判定3###################
-	def henkou3(aa ,ff ,fsyamei ,gg ,gsyamei ,hh , hsyamei, ii ,isyamei, jj ,jsyamei ,kk ,ksyamei ,ll ,lsyamei ,mm ,msyamei ,nn ,nsyamei ):
-		def hantei9(aa , ff ,fsyamei):
-			def hantei8(aa , gg ,gsyamei):
-				def hantei7(aa , hh ,hsyamei):
-					def hantei6(aa , ii ,isyamei):
-						def hantei5(aa , jj ,jsyamei):
-							def hantei4(aa , kk ,ksyamei):
-								def hantei3(aa , ll ,lsyamei):
-									def hantei2(aa ,mm ,msyamei):
-										def hantei1(aa ,nn ,nsyamei):
-											if nn + aa >= 0:
-												nn += aa
-												sendkey(nsyamei, nn)
-											elif nn > 0 and nn + aa < 0:
-												sendkey(nsyamei, 0)
-												aa += nn
-											else:
-												print("mainasu syori dekimasen!!!!!!!!!!!!!!!!!!!!")
+	def henkou3(aa ,gg ,gsyamei ,hh , hsyamei, ii ,isyamei, jj ,jsyamei ,kk ,ksyamei ,ll ,lsyamei ,mm ,msyamei ,nn ,nsyamei ):
+		def hantei8(aa , gg ,gsyamei):
+			def hantei7(aa , hh ,hsyamei):
+				def hantei6(aa , ii ,isyamei):
+					def hantei5(aa , jj ,jsyamei):
+						def hantei4(aa , kk ,ksyamei):
+							def hantei3(aa , ll ,lsyamei):
+								def hantei2(aa ,mm ,msyamei):
+									def hantei1(aa ,nn ,nsyamei):
+										if nn + aa >= 0:
+											nn += aa
+											sendkey(nsyamei, nn)
+										elif nn > 0 and nn + aa < 0:
+											sendkey(nsyamei, 0)
+											aa += nn
+										else:
+											print("mainasu syori dekimasen!!!!!!!!!!!!!!!!!!!!")
 									if mm + aa >= 0:
 										mm += aa
 										sendkey(msyamei, mm)
@@ -1107,16 +1272,7 @@ def kansi3():
 				hantei7(aa ,hh ,hsyamei)
 			else:
 				hantei7(aa ,hh ,hsyamei)
-		if ff + aa >= 0:
-			ff += aa
-			sendkey(fsyamei, ff)
-		elif ff > 0 and ff + aa < 0:
-			sendkey(fsyamei, 0)
-			aa += ff
-			hantei8(aa ,gg ,gsyamei)
-		else:
-			hantei8(aa ,gg ,gsyamei)
-	        
+		hantei8(aa , gg ,gsyamei)
 	x = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15']
 	for z in x:
 	    #和室15畳 
@@ -1185,34 +1341,57 @@ def kansi3():
 
 	    #a, wasitunet, b, gentei, c, jtb, d, kinki, e, nihon, f, top, g, ANA, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, m, jtb01, n, toku01)
 	    if a < 0:
-	        henkou2(a, b, gentei, g, ANA, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, n, toku01)
-            
+	        henkou2(a, b, gentei, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, n, toku01)
+	        ataisousin()
+	        net_mainasu(z, '//*[@id="checkBoxNetRoomTypeGroupGrp1_0"]')
 	    if b < 0:
-	        henkou2(b, a, wasitunet, g, ANA, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, n, toku01)
+	        henkou2(b, a, wasitunet, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, n, toku01)
+	        ataisousin()
+	        net_mainasu(z, '//*[@id="checkBoxNetRoomTypeGroupGrp10_0"]')
 	    if c < 0:
-	        henkou3(c, a, wasitunet, b, gentei, g, ANA, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, n, toku01)
+	        henkou3(c, a, wasitunet, b, gentei, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, n, toku01)
+	        ataisousin()
+	        ryokou_mainasu(z, '//*[@id="checkBoxRelAgentRoomTypeGrp1_0"]')
 	    if d < 0:
-	        henkou3(d, a, wasitunet, b, gentei, g, ANA, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, n, toku01)
+	        henkou3(d, a, wasitunet, b, gentei, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, n, toku01)
+	        ataisousin()
+	        ryokou_mainasu(z, '//*[@id="checkBoxRelAgentRoomTypeGrp1_1"]')
 	    if e < 0:
-	        henkou3(e, a, wasitunet, b, gentei, g, ANA, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, n, toku01)
+	        henkou3(e, a, wasitunet, b, gentei, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, n, toku01)
+	        ataisousin()
+	        ryokou_mainasu(z, '//*[@id="checkBoxRelAgentRoomTypeGrp1_2"]')
 	    if f < 0:
-	        henkou3(f, a, wasitunet, b, gentei, g, ANA, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, n, toku01)
+	        henkou3(f, a, wasitunet, b, gentei, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, n, toku01)
+	        ataisousin()
+	        ryokou_mainasu(z, '//*[@id="checkBoxRelAgentRoomTypeGrp1_3"]')
 	    if g < 0:
-	        henkou2(g, a, wasitunet, b, gentei, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, n, toku01)
+	        henkou3(g, a, wasitunet, b, gentei, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, n, toku01)
+	        ataisousin()
+	        ryokou_mainasu(z, '//*[@id="checkBoxRelAgentRoomTypeGrp1_4"]')
 	    if h < 0:
-	        henkou2(h, a, wasitunet, b, gentei, g, ANA, i, JR52, j, upgrade, k, jyuntoku, l, toku05, n, toku01)
+	        henkou2(h, a, wasitunet, b, gentei, i, JR52, j, upgrade, k, jyuntoku, l, toku05, n, toku01)
 	    if i < 0:
-	        henkou2(i, a, wasitunet, b, gentei, g, ANA, h, JR51, j, upgrade, k, jyuntoku, l, toku05, n, toku01)
+	        henkou2(i, a, wasitunet, b, gentei, h, JR51, j, upgrade, k, jyuntoku, l, toku05, n, toku01)
 	    if j < 0:
-	        henkou2(j, a, wasitunet, b, gentei, g, ANA, h, JR51, i, JR52, k, jyuntoku, l, toku05, n, toku01)
+	        henkou2(j, a, wasitunet, b, gentei, h, JR51, i, JR52, k, jyuntoku, l, toku05, n, toku01)
+	        ataisousin()
+	        net_mainasu(z, '//*[@id="checkBoxNetRoomTypeGroupGrp9_0"]')
 	    if k < 0:
-	        henkou2(k, a, wasitunet, b, gentei, g, ANA, h, JR51, i, JR52, j, upgrade, l, toku05, n, toku01)
+	        henkou2(k, a, wasitunet, b, gentei, h, JR51, i, JR52, j, upgrade, l, toku05, n, toku01)
+	        ataisousin()
+	        net_mainasu(z, '//*[@id="checkBoxNetRoomTypeGroupGrp2_0"]')
 	    if l < 0:
-	        henkou2(l, a, wasitunet, b, gentei, g, ANA, h, JR51, i, JR52, j, upgrade, k, jyuntoku, n, toku01)
+	        henkou2(l, a, wasitunet, b, gentei, h, JR51, i, JR52, j, upgrade, k, jyuntoku, n, toku01)
+	        ataisousin()
+	        net_mainasu(z, '//*[@id="checkBoxNetRoomTypeGroupGrp3_0"]')
 	    if m < 0:
-	        henkou3(m, a, wasitunet, b, gentei, g, ANA, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, n, toku01)
+	        henkou3(m, a, wasitunet, b, gentei, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05, n, toku01)
+	        ataisousin()
+	        ryokou_mainasu(z, '//*[@id="checkBoxRelAgentRoomTypeGrp3_0"]')
 	    if n < 0:
-	        henkou2(n, a, wasitunet, b, gentei, g, ANA, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05)
+	        henkou2(n, a, wasitunet, b, gentei, h, JR51, i, JR52, j, upgrade, k, jyuntoku, l, toku05)
+	        ataisousin()
+	        net_mainasu(z, '//*[@id="checkBoxNetRoomTypeGroupGrp4_0"]')
 ##############関数フェーズ終了###################
 for zz in range(5):
 	kansi3()
