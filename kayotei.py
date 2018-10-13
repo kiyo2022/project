@@ -5,8 +5,48 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.common.alert import Alert
 import time
+import smtplib
+from email.mime.text import MIMEText
+from email.utils import formatdate
 
-driver = webdriver.Chrome("c:/Users/bfdev02/python/chromedriver.exe")
+#######################メール送信###################################
+def email(day):
+	FROM_ADDRESS = 'kkayoutei@gmail.com'
+	MY_PASSWORD = 'kodani22'
+	TO_ADDRESS = 'kodani@bfront.co.jp'
+	BCC = ''
+	SUBJECT = 'Tyumon tyouka no osirase!!'
+	BODY = day + 'mitekudasai!!!!!!!!!!!!!!!!!'
+
+
+	def create_message(from_addr, to_addr, bcc_addrs, subject, body):
+	    msg = MIMEText(body)
+	    msg['Subject'] = subject
+	    msg['From'] = from_addr
+	    msg['To'] = to_addr
+	    msg['Bcc'] = bcc_addrs
+	    msg['Date'] = formatdate()
+	    return msg
+
+
+	def send(from_addr, to_addrs, msg):
+	    smtpobj = smtplib.SMTP('smtp.gmail.com', 587)
+	    smtpobj.ehlo()
+	    smtpobj.starttls()
+	    smtpobj.ehlo()
+	    smtpobj.login(FROM_ADDRESS, MY_PASSWORD)
+	    smtpobj.sendmail(from_addr, to_addrs, msg.as_string())
+	    smtpobj.close()
+
+
+	if __name__ == '__main__':
+		to_addr = TO_ADDRESS
+		subject = SUBJECT
+		body = BODY
+		msg = create_message(FROM_ADDRESS, to_addr, BCC, subject, body)
+		send(FROM_ADDRESS, to_addr, msg)
+########################処理開始####################################################
+driver = webdriver.Chrome("c:/Users/Ycafe4/python/chromedriver.exe")
 driver.get("https://www.tl-lincoln.net/accomodation/Ascsc1000InitAction.do")
 #ログインまでの処理
 lincoln_login_id = driver.find_element_by_id("txt_usrId")
@@ -149,6 +189,7 @@ def kansi():
 	                                                            aa += nn
 	                                                        else:
 	                                                            print("mainasu syori dekimasen!!!!!!!!!!!!!!!!!!!!")
+	                                                            email(day.text)
 	                                                    if mm + aa >= 0:
 	                                                        mm += aa
 	                                                        sendkey(msyamei, mm)
@@ -261,6 +302,8 @@ def kansi():
 	
 	x = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15']
 	for z in x:
+	    day = driver.find_element_by_xpath('//*[@id="dataHeaderInner"]/div[2]/table/tbody/tr/td[' + z + ']/div/a/div')
+	    print(day.text)
 	    #和室15畳 
 	    #JTB02  
 	    jtb = '//*[@id="rmType_1"]/table[1]/tbody/tr[1]/td[' + z + ']/div/input'
@@ -380,9 +423,6 @@ def kansi():
 	        net_mainasu(z, '//*[@id="checkBoxNetRoomTypeGroupGrp4_0"]')
 
 ##############関数フェーズ終了###################
-kansi()
-yoku2syu = driver.find_element_by_xpath('//*[@id="dataHeaderInner"]/div[1]/div[1]/ul/li[6]/a/span')
-yoku2syu.click()
 #######################関数フェーズ2#########################
 def kansi2():
 	#値を取得
@@ -509,6 +549,7 @@ def kansi2():
 	                                                            aa += nn
 	                                                        else:
 	                                                            print("mainasu syori dekimasen!!!!!!!!!!!!!!!!!!!!")
+	                                                            email(day.text)
 	                                                    if mm + aa >= 0:
 	                                                        mm += aa
 	                                                        sendkey(msyamei, mm)
@@ -635,6 +676,7 @@ def kansi2():
 										aa += nn
 									else:
 										print("mainasu syori dekimasen!!!!!!!!!!!!!!!!!!!!")
+										email(day.text)
 								if mm + aa >= 0:
 									mm += aa
 									sendkey(msyamei, mm)
@@ -708,6 +750,7 @@ def kansi2():
 											aa += nn
 										else:
 											print("mainasu syori dekimasen!!!!!!!!!!!!!!!!!!!!")
+											email(day.text)
 									if mm + aa >= 0:
 										mm += aa
 										sendkey(msyamei, mm)
@@ -775,6 +818,8 @@ def kansi2():
 
 	x = ['1', '2', '3', '4']
 	for z in x:
+	    day = driver.find_element_by_xpath('//*[@id="dataHeaderInner"]/div[2]/table/tbody/tr/td[' + z + ']/div/a/div')
+	    print(day.text)
 	    #和室15畳 
 	    #JTB02  
 	    jtb = '//*[@id="rmType_1"]/table[1]/tbody/tr[1]/td[' + z + ']/div/input'
@@ -895,6 +940,8 @@ def kansi2():
 
 	x = ['5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15']
 	for z in x:
+	    day = driver.find_element_by_xpath('//*[@id="dataHeaderInner"]/div[2]/table/tbody/tr/td[' + z + ']/div/a/div')
+	    print(day.text)
 	    #和室15畳 
 	    #JTB02  
 	    jtb = '//*[@id="rmType_1"]/table[1]/tbody/tr[1]/td[' + z + ']/div/input'
@@ -1013,9 +1060,6 @@ def kansi2():
 	        ataisousin()
 	        net_mainasu(z, '//*[@id="checkBoxNetRoomTypeGroupGrp4_0"]')
 ##############関数フェーズ終了###################
-kansi2()
-yoku2syu = driver.find_element_by_xpath('//*[@id="dataHeaderInner"]/div[1]/div[1]/ul/li[6]/a/span')
-yoku2syu.click()
 ################################関数フェーズ3#################################
 def kansi3():
 	#値を取得
@@ -1136,6 +1180,7 @@ def kansi3():
 										aa += nn
 									else:
 										print("mainasu syori dekimasen!!!!!!!!!!!!!!!!!!!!")
+										email(day.text)
 								if mm + aa >= 0:
 									mm += aa
 									sendkey(msyamei, mm)
@@ -1209,6 +1254,7 @@ def kansi3():
 											aa += nn
 										else:
 											print("mainasu syori dekimasen!!!!!!!!!!!!!!!!!!!!")
+											email(day.text)
 									if mm + aa >= 0:
 										mm += aa
 										sendkey(msyamei, mm)
@@ -1275,6 +1321,8 @@ def kansi3():
 		hantei8(aa , gg ,gsyamei)
 	x = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15']
 	for z in x:
+	    day = driver.find_element_by_xpath('//*[@id="dataHeaderInner"]/div[2]/table/tbody/tr/td[' + z + ']/div/a/div')
+	    print(day.text)
 	    #和室15畳 
 	    #JTB02  
 	    jtb = '//*[@id="rmType_1"]/table[1]/tbody/tr[1]/td[' + z + ']/div/input'
@@ -1393,7 +1441,20 @@ def kansi3():
 	        ataisousin()
 	        net_mainasu(z, '//*[@id="checkBoxNetRoomTypeGroupGrp4_0"]')
 ##############関数フェーズ終了###################
-for zz in range(5):
-	kansi3()
+while(True):
+	kansi()
 	yoku2syu = driver.find_element_by_xpath('//*[@id="dataHeaderInner"]/div[1]/div[1]/ul/li[6]/a/span')
 	yoku2syu.click()
+	print("Nisyusaki ni ikimasu")
+	kansi2()
+	yoku2syu = driver.find_element_by_xpath('//*[@id="dataHeaderInner"]/div[1]/div[1]/ul/li[6]/a/span')
+	yoku2syu.click()
+	print("Nisyusaki ni ikimasu")
+	for zz in range(5):
+		kansi3()
+		yoku2syu = driver.find_element_by_xpath('//*[@id="dataHeaderInner"]/div[1]/div[1]/ul/li[6]/a/span')
+		yoku2syu.click()
+		print("Nisyusaki ni ikimasu")
+	print("hajime ni modorimasu")
+	kyou = driver.find_element_by_xpath('//*[@id="dataHeaderInner"]/div[1]/div[1]/ul/li[1]/a/span')
+	kyou.click()
