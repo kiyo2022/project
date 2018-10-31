@@ -41,3 +41,13 @@ aws rekognition detect-labels --image '{"S3Object":{"Bucket":"bfdata1", "Name":"
 http://www.seleniumqref.com/api/python/element_infoget/Python_get_attribute.html
 https://qiita.com/ywindish/items/5a992c49387d81df900e
 
+
+
+redmine関係
+
+https://www.r-labs.org/projects/r-labs/plugin_list/index?page=11
+https://www.r-labs.org/projects/205/plugin_list/show
+https://www.r-labs.org/projects/547/plugin_list/show
+https://www.r-labs.org/projects/675/plugin_list/show
+https://www.r-labs.org/projects/316/plugin_list/show
+https://www.r-labs.org/projects/243/plugin_list/show
