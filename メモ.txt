@@ -51,3 +51,8 @@ https://www.r-labs.org/projects/547/plugin_list/show
 https://www.r-labs.org/projects/675/plugin_list/show
 https://www.r-labs.org/projects/316/plugin_list/show
 https://www.r-labs.org/projects/243/plugin_list/show
+
+kaggle関係
+
+https://www.youtube.com/watch?v=NHQTw-ORcSQ&vl=ja
+https://www.coursera.org/learn/competitive-data-science
