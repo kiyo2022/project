@@ -56,3 +56,9 @@ kaggle関係
 
 https://www.youtube.com/watch?v=NHQTw-ORcSQ&vl=ja
 https://www.coursera.org/learn/competitive-data-science
+
+kaggleメモ
+
+株価予測のRawとMktresの違いがわからん
+universeの意味がわからん
+計測機どうやって？
