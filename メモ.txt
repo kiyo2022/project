@@ -63,3 +63,15 @@ kaggleメモ
 株価予測のRawとMktresの違いがわからん
 universeの意味がわからん
 計測機どうやって？
+
+F関係
+
+360度カメラ
+https://tips.spacely.co.jp/howto-thetas/
+https://www.amazon.co.jp/dp/B01MA1Y0OG/ref=emc_b_5_t
+撮影方法
+https://tips.spacely.co.jp/360camera_room/
+スペースリー
+https://spacely.co.jp/
+Fusion360
+https://www.autodesk.co.jp/products/fusion-360/subscribe?mktvar002=knc_wwm_apac_jp_nc_ggl__fusion360-br___ENGINE-_-GoogleJP__CAMPAIGN-_-JP_G_eStore_Fusion360_B__ADGROUP-_-Fusion360_B_Fusion_360_Alone_BMM__KEYWORD-_-eStore_G_14379__MATCHTYPE-_-Broad__CREATIVE-_-262512423041&mktvar002=knc_wwm_apac_jp_nc_ggl__fusion360-br2018__ENGINE-_-GoogleJP__CAMPAIGN-_-JP_G_eStore_Fusion360_B__ADGROUP-_-B_Fusion_360_Alone_BMM__KEYWORD-_-%2Bfusion%20%2B360__CREATIVE-_-FY18Q3_a__DEVICE-_-c&gclid=EAIaIQobChMIjZ_1guPs3gIVzQcqCh0Ulw64EAAYASAAEgKxOPD_BwE&plc=F360&term=1-MONTH&support=ADVANCED&quantity=1
