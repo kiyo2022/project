@@ -1,3 +1,10 @@
+椅子
+https://item.rakuten.co.jp/ekagu-biz/h-013/?s-id=step0_pc_itemname
+洗濯機
+https://item.rakuten.co.jp/kyoto-serikawa/sb-rht045w/
+冷蔵庫
+https://item.rakuten.co.jp/lifeassist/r23892/?scid=af_pc_etc&sc2id=af_113_0_10001868
+
 IoTを使って畑を監視する
 https://tech.recruit-mp.co.jp/iot/farm-monitoring-with-iot/
 初心者がどハマりしたAWS IoTのRuleの概要と使い方まとめ
