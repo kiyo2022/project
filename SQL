@@ -1,0 +1,451 @@
+--縦持ち
+SELECT
+      APPVER_EX_FLG
+    , UNKNOWNUSER_EX_FLG
+    , YESTERDAY_EX_FLG
+    , EXCLUDED_USERS_EX_FLG
+    --, SETAI_ATTRIBUTE_FLG
+    , RICE_COOK_SIZE_FLG
+    , QUICK_COOK_FLG
+    , RICECOOK_FLG_ST
+    , RICECOOK_FLG
+    , "'SR-AX1'"
+    , "'SR-AX1-W'"
+    , "'SR-AX1-FS'"
+FROM OUTPUT3
+PIVOT (SUM(USER_NUM) FOR MODEL_APP IN ('SR-AX1','SR-AX1-W','SR-AX1-FS')) AS PV
+
+--KPI
+-- 1.1. カレンダーデータの読み込み(累計の算出と週、月、Q、年別に簡単に集計するために必要)
+WITH CALENDER AS (
+    SELECT
+          DAILY                -- 日付
+        , WEEKLY               -- 週の終了日(日付型)
+        , WEEKLY_RANGE         -- 週の開始～終了(例：2022年9月3日～2022年9月9日)
+        , WEEKLY_LATEST_FLG    -- 直近週にデータが１週間分含まれていなければ１とするフラグ
+        , MONTHLY              -- 月の終了日(日付型)
+        , MONTHLY_RANGE        -- 年月(例：2022年9月)
+        , MONTHLY_LATEST_FLG   -- 直近月にデータが１月分含まれていなければ１とするフラグ
+        , QUARTERLY            -- Qの終了日(日付型)
+        , QUARTERLY_RANGE      -- 年Q(例：2022年2Q)
+        , QUARTERLY_LATEST_FLG -- 直近Qにデータが１Q分含まれていなければ１とするフラグ
+        , YEARLY               -- 年の終了日(日付型)
+        , YEARLY_RANGE         -- 年(例：2022年)
+        , YEARLY_LATEST_FLG    -- 直近年にデータが１年分含まれていなければ１とするフラグ
+        , TOTAL                -- 全期間用
+    FROM MASTER.M_CALENDER_DATE_ADD_RANGE
+    WHERE DAILY < DATE(CONVERT_TIMEZONE('Asia/Tokyo', CURRENT_TIMESTAMP())) AND DAILY >= '2021-04-01'  -- アプリログ出力開始日2021年4月1日～昨日までを抽出
+)
+-- SELECT * FROM CALENDER;
+
+-- 1.2. KPアプリ加工データの読み込み
+,KPA_ST_DATA AS(
+    SELECT
+          KPA_DATE                     -- 日付(JST基準に変換)
+        , USERID                       -- 暗号化統一顧客ID
+        , APPVER                       -- アプリバージョン
+        , APPVER_1                     -- アプリバージョン(メジャー)を数字に変換
+        , APPVER_2                     -- アプリバージョン(マナー)を数字に変換
+        , APPVER_3                     -- アプリバージョン(リビジョン)を数字に変換
+        , EVENTID                      -- イベントID (画面閲覧などを特定)
+        , PAGEID                       -- ページID (レシピ送信などを特定)
+        , RECIPEID                     -- レシピID (dlMenuIdと紐づけ可能)
+        , PRODUCTCODE                  -- 品番 (レシピ送信など一部のページIDで記録 ex.'NE-BS2700-W')
+        , RECIPEID AS RECIPEID_MASTER  -- レシピID
+        , DLMENUID                     -- DLメニューID
+        , MODEL                        -- モデル
+        , MODEL_COMPLETION             -- アプリログで品番情報が欠損しているため、レシピマスタから品番を補完
+        ,  MODEL_APP                   -- 品番文字列を統一するために変換
+        , REG_MODEL                    -- 機器追加 H-06 の時の品番を取得するために変換
+        , "cpc_usr_id"                 -- クラパナID
+        , "device_id"                  -- デバイスID
+        , LDC_DEVICE_ID                -- デバイスID
+        , LDC_VER1_DEVICE_ID           -- デバイスID v1
+        , REGISTER_DATE                -- 登録日
+        , DEVICE_TYPE                  -- 機器タイプ（量産品、テスト機など）
+        , DEVICE_MODEL_NAME            -- 機器ログで判明した品番
+        , RECIPE_DL_FLG                --レンジのレシピダウンロードのフラグを付与
+        , TRY_REG_FLG                  --追加機器のフラグを付与
+    FROM KPA_DATA_PROCESSED
+)
+-- SELECT * FROM KPA_DATA;
+
+------------------------------------------------
+-- 2. 集計加工
+------------------------------------------------
+
+-- 2.1 日単位でアクティブな重複なしのユーザー一覧を作成
+--   レシピ送信率の計算に用いられる分子、分母の計算のベースとなるテーブル
+--   入力：KPA_ST_DATA (1.5.)
+,KPA_ST_DATA2 AS(
+    SELECT DISTINCT
+          KPA_DATE
+        , USERID
+        , MODEL_APP
+        , RECIPE_DL_FLG
+    FROM KPA_ST_DATA
+    ORDER BY KPA_DATE DESC
+)
+-- SELECT * FROM KPA_ST_DATA2 LIMIT 100;
+
+-- 2.2. 過去にレシピ送信したことがあるユーザーID、品番、初回レシピ送信日の一覧を作成
+--   分母を初回レシピ送信完遂者に絞るため
+--   入力：KPA_ST_DATA2 (2.1.)
+, KPA_ST_DATA_FIRST_DL_RECIPE AS(
+    SELECT
+          USERID
+        , MODEL_APP
+        , MIN(KPA_DATE) AS KPA_DATE_FIRST_DL_RECIPE
+    FROM KPA_ST_DATA2
+    WHERE RECIPE_DL_FLG = 1
+    GROUP BY USERID, MODEL_APP
+)
+-- SELECT * FROM KPA_ST_DATA_FIRST_DL_RECIPE ORDER BY KPA_DATE_FIRST_DL_RECIPE desc;
+
+-- 2.3. 分子・分母の基となるデータの作成
+-- 2.3.1. 分子の基となるデータを作成 -----------------------------------
+--   日単位で、レシピを送信した(RECIPE_DL_FLG = 1となる)品番・ユーザーを抽出
+--   入力：KPA_ST_DATA2 (2.1.)
+, KPA_ST_DATA_TOP_BASE AS(
+    SELECT
+          KPA_DATE
+        , USERID
+        , MODEL_APP
+    FROM KPA_ST_DATA2
+    WHERE RECIPE_DL_FLG = 1
+)
+--SELECT * FROM KPA_ST_DATA_TOP ORDER BY KPA_DATE desc;
+
+-- 2.3.2. 分母の基となるデータを作成 ----------------------------------------------------
+--   アプリアクティブユーザーの一覧を作成
+--   対象は初回レシピ送信完遂者に絞った
+--   入力：KPA_ST_DATA2 (2.1.), KPA_ST_DATA_FIRST_DL_RECIPE (2.2)
+,KPA_ST_DATA_BOT_BASE AS(
+    SELECT
+         K.KPA_DATE
+        ,K.USERID
+        ,D.MODEL_APP
+    FROM KPA_ST_DATA2 AS K
+    -- 初回レシピ送信日以降のユーザーID、品番の組み合わせに絞る
+    LEFT JOIN KPA_ST_DATA_FIRST_DL_RECIPE AS D
+    ON K.KPA_DATE >= D.KPA_DATE_FIRST_DL_RECIPE AND K.USERID = D.USERID
+    WHERE D.MODEL_APP IS NOT NULL
+)
+-- SELECT * FROM KPA_ST_DATA_BOT ORDER BY KPA_DATE desc;
+
+-- 2.4. 集計期間ごとの集計データ作成(分子・分母の計算)
+-- 2.4.1. 集計期間ごとの集計データ作成(分子)
+-- 入力：KPA_ST_DATA_TOP_BASE (2.3.1.), CALENDER(1.1.)
+-- 分子の基となるデータに対し(2.3.1.)、カレンダーマスタを紐づけて日毎、週毎、月毎、Q毎、年毎のデータを作成
+-- これに対して集計操作を行うことで分子を計算する
+, KPA_ST_DATA_TOP_ST AS(
+    SELECT
+        C.DAILY
+        , C.WEEKLY
+        , C.MONTHLY
+        , C.QUARTERLY
+        , C.YEARLY
+        , C.TOTAL
+        , K.USERID
+        , K.MODEL_APP
+    FROM KPA_ST_DATA_TOP_BASE AS K
+    LEFT JOIN CALENDER AS C
+    ON K.KPA_DATE = C.DAILY
+)
+--SELECT * FROM KPA_ST_DATA_TOP_ST ORDER BY DAILY asc;
+
+-- 集計の実体部分
+-- GROUP BY GROUPING SETSを用いて、
+-- 集計期間（日毎、週毎、月毎、Q毎、年毎、全期間）ごとの集計データをまとめて作る    
+, KPA_ST_DATA_TOP AS(
+    SELECT
+          CASE WHEN DAILY IS NOT NULL THEN DAILY 
+               WHEN WEEKLY IS NOT NULL THEN WEEKLY 
+               WHEN MONTHLY IS NOT NULL THEN MONTHLY 
+               WHEN QUARTERLY IS NOT NULL THEN QUARTERLY 
+               WHEN YEARLY IS NOT NULL THEN YEARLY
+               WHEN TOTAL IS NOT NULL THEN TOTAL
+               ELSE NULL END AS START_DATE
+        , CASE WHEN (GROUPING(MODEL_APP) = 1) THEN 'ALL' ELSE IFNULL(MODEL_APP, 'UNKNOWN') END AS MODEL_APP
+        , CASE WHEN DAILY IS NOT NULL THEN '日毎' 
+               WHEN WEEKLY IS NOT NULL THEN '週毎' 
+               WHEN MONTHLY IS NOT NULL THEN '月毎' 
+               WHEN QUARTERLY IS NOT NULL THEN 'Q毎' 
+               WHEN YEARLY IS NOT NULL THEN '年毎'
+               WHEN TOTAL IS NOT NULL THEN '全期間'
+               ELSE NULL END AS CATEGORY
+        , COUNT(DISTINCT USERID) AS KPA_TOP
+    FROM KPA_ST_DATA_TOP_ST
+    -- 集計期間ごと集計用グループを定義
+    -- 集計対象を分かりやすくするため、2セットずつ記載している
+    GROUP BY GROUPING SETS(
+          ()
+        , DAILY,    (DAILY,    MODEL_APP)
+        , WEEKLY,   (WEEKLY,   MODEL_APP)
+        , MONTHLY,  (MONTHLY,  MODEL_APP)
+        , QUARTERLY,(QUARTERLY,MODEL_APP)
+        , YEARLY,   (YEARLY,   MODEL_APP)
+        , TOTAL,    (TOTAL,    MODEL_APP)
+    )
+    -- 下記で無関係の小計行を削除
+    HAVING START_DATE IS NOT NULL
+    OR WEEKLY    IS NOT NULL 
+    OR MONTHLY   IS NOT NULL
+    OR QUARTERLY IS NOT NULL
+    OR YEARLY IS NOT NULL
+    OR TOTAL IS NOT NULL
+)
+--SELECT * FROM KPA_ST_DATA_TOP ORDER BY START_DATE asc;
+
+-- 2.4.2. 集計期間ごとの集計データ作成(分母)
+-- 入力：KPA_ST_DATA_BOT_BASE (2.3.2.), CALENDER(1.1.)
+-- 分母の基となるデータ(2.3.2.)に対し、カレンダーマスタを紐づけて日毎、週毎、月毎、Q毎、年毎のデータを作成
+, KPA_ST_DATA_BOT_ST AS(
+    SELECT
+        C.DAILY
+        , C.WEEKLY
+        , C.MONTHLY
+        , C.QUARTERLY
+        , C.YEARLY
+        , C.TOTAL
+        , K.USERID
+        , K.MODEL_APP
+    FROM KPA_ST_DATA_BOT_BASE AS K
+    LEFT JOIN CALENDER AS C
+    ON K.KPA_DATE = C.DAILY
+)
+--SELECT * FROM KPA_ST_DATA_BOT_ST ORDER BY DAILY desc;
+
+-- 集計の実体部分
+-- GROUP BY GROUPING SETSを用いて、
+-- 集計期間（日毎、週毎、月毎、Q毎、年毎、全期間）ごとの集計データをまとめて作る    
+, KPA_ST_DATA_BOT_ST2 AS(
+    SELECT
+          CASE WHEN DAILY IS NOT NULL THEN DAILY 
+               WHEN WEEKLY IS NOT NULL THEN WEEKLY 
+               WHEN MONTHLY IS NOT NULL THEN MONTHLY 
+               WHEN QUARTERLY IS NOT NULL THEN QUARTERLY 
+               WHEN YEARLY IS NOT NULL THEN YEARLY
+               WHEN TOTAL IS NOT NULL THEN TOTAL
+               ELSE NULL END AS START_DATE
+        , CASE WHEN (GROUPING(MODEL_APP) = 1) THEN 'ALL' ELSE IFNULL(MODEL_APP, 'UNKNOWN') END AS MODEL_APP
+        , CASE WHEN DAILY IS NOT NULL THEN '日毎' 
+               WHEN WEEKLY IS NOT NULL THEN '週毎' 
+               WHEN MONTHLY IS NOT NULL THEN '月毎' 
+               WHEN QUARTERLY IS NOT NULL THEN 'Q毎' 
+               WHEN YEARLY IS NOT NULL THEN '年毎'
+               WHEN TOTAL IS NOT NULL THEN '全期間'
+               ELSE NULL END AS CATEGORY
+        , COUNT(DISTINCT USERID) AS KPA_BOT
+    FROM KPA_ST_DATA_BOT_ST AS K
+    -- 集計期間ごと集計用グループを定義
+    -- 集計対象を分かりやすくするため、2セットずつ記載している
+    GROUP BY GROUPING SETS(
+          ()
+        , DAILY,    (DAILY,    MODEL_APP)
+        , WEEKLY,   (WEEKLY,   MODEL_APP)
+        , MONTHLY,  (MONTHLY,  MODEL_APP)
+        , QUARTERLY,(QUARTERLY,MODEL_APP)
+        , YEARLY,   (YEARLY,   MODEL_APP)
+        , TOTAL,    (TOTAL,    MODEL_APP)
+    )
+    -- 下記で無関係の小計行を削除
+    HAVING (START_DATE IS NOT NULL
+    OR WEEKLY    IS NOT NULL 
+    OR MONTHLY   IS NOT NULL
+    OR QUARTERLY IS NOT NULL
+    OR YEARLY IS NOT NULL
+    OR TOTAL IS NOT NULL)
+)
+--SELECT * FROM KPA_ST_DATA_BOT_ST2 ORDER BY START_DATE asc;
+
+-- 集計結果に対する後処理(分母)
+-- 分母については、最終的な出力に合わせてカラム追加などの後処理を行う
+-- 分母の集計結果のテーブルに、DATA_RANGE, LATEST_FLGのカラムを追加する
+-- 分母の集計処理を複雑にしないため、この処理は外に出している
+, KPA_ST_DATA_BOT AS(
+    SELECT DISTINCT
+          K.CATEGORY
+        , K.START_DATE
+        , K.MODEL_APP
+        , K.KPA_BOT
+        , DATE(DATEADD(DAY, -1 ,CONVERT_TIMEZONE('Asia/Tokyo', CURRENT_TIMESTAMP()))) AS YESTERDAY
+        , CASE WHEN K.CATEGORY = '日毎' THEN CONCAT(YEAR(K.START_DATE), '年', MONTH(K.START_DATE), '月', DAY(K.START_DATE), '日')
+               WHEN K.CATEGORY = '週毎' THEN C.WEEKLY_RANGE 
+               WHEN K.CATEGORY = '月毎' THEN C.MONTHLY_RANGE
+               WHEN K.CATEGORY = 'Q毎' THEN C.QUARTERLY_RANGE
+               WHEN K.CATEGORY = '年毎' THEN C.YEARLY_RANGE
+               WHEN K.CATEGORY = '全期間' THEN CONCAT('2021年4月1日~', YEAR(YESTERDAY), '年', MONTH(YESTERDAY), '月', DAY(YESTERDAY), '日')
+               ELSE NULL END AS DATE_RANGE
+        , CASE WHEN K.CATEGORY = '日毎' THEN 0 
+               WHEN K.CATEGORY = '週毎' THEN C.WEEKLY_LATEST_FLG
+               WHEN K.CATEGORY = '月毎' THEN C.MONTHLY_LATEST_FLG
+               WHEN K.CATEGORY = 'Q毎' THEN C.QUARTERLY_LATEST_FLG
+               WHEN K.CATEGORY = '年毎' THEN C.YEARLY_LATEST_FLG
+               WHEN K.CATEGORY = '全期間' THEN 0 
+               ELSE NULL END AS LATEST_FLG
+    FROM KPA_ST_DATA_BOT_ST2 AS K
+        --カテゴリごとに紐づけのための日付が異なるため、各条件で結合している
+        INNER JOIN CALENDER AS C ON 
+            (K.CATEGORY = '日毎'    AND K.START_DATE = C.DAILY)
+            OR (K.CATEGORY = '週毎' AND K.START_DATE = C.WEEKLY)
+            OR (K.CATEGORY = '月毎' AND K.START_DATE = C.MONTHLY)
+            OR (K.CATEGORY = 'Q毎'  AND K.START_DATE = C.QUARTERLY)
+            OR (K.CATEGORY = '年毎'  AND K.START_DATE = C.YEARLY)
+            OR (K.CATEGORY = '全期間' AND K.START_DATE = C.DAILY)    
+)
+--SELECT * FROM KPA_ST_DATA_BOT;
+
+------------------------------------------------
+-- 3. レシピ送信率計算
+------------------------------------------------
+-- 2. の結果(各集計期間の分母、分子)を用いて、各集計期間におけるレシピ送信率を計算する
+-- 各期間で集計したテーブルを用いて率を求め、それらのUNION ALLしたテーブルが最終結果となる
+-- （各モデルもしくは全モデルについて、集計期間ごとのレシピ送信率が計算されたテーブル）
+-- 入力：KPA_ST_DATA_TOP (2.4.1.)
+--      KPA_ST_DATA_BOT (2.4.2.)
+SELECT
+    B.CATEGORY
+    , B.DATE_RANGE
+    , B.START_DATE
+    , B.MODEL_APP AS MODEL
+    , T.KPA_TOP
+    , B.KPA_BOT
+    , DIV0(T.KPA_TOP, B.KPA_BOT) AS KPA_RATE
+    , B.LATEST_FLG
+FROM KPA_ST_DATA_BOT AS B
+LEFT JOIN KPA_ST_DATA_TOP AS T
+ON B.CATEGORY = T.CATEGORY
+AND B.START_DATE = T.START_DATE
+AND B.MODEL_APP = T.MODEL_APP
+;
+
+
+--カレンダー
+create or replace view SELFANALYTICS_KPAPP.MASTER.M_CALENDER_DATE_ADD_RANGE(
+	DAILY,
+	WEEKLY,
+	WEEKLY_RANGE,
+	WEEKLY_LATEST_FLG,
+	WEEKLY_MS,
+	WEEKLY_RANGE_MS,
+	WEEKLY_LATEST_FLG_MS,
+	YEAR_WEEK,
+	YEAR_MONTH,
+	MONTHLY,
+	MONTHLY_RANGE,
+	MONTHLY_LATEST_FLG,
+	QUARTERLY,
+	QUARTERLY_RANGE,
+	QUARTERLY_LATEST_FLG,
+	YEARLY,
+	YEARLY_RANGE,
+	YEARLY_LATEST_FLG,
+	TOTAL
+) as
+/**
+-- =============================================
+-- 作成者：カコムス小谷　作成日：2022/10/18
+-- 更新者：カコムス小谷　更新日: 
+-- バージョン：1.0
+-- スクリプトの説明：カレンダーテーブルから週、月、Q、年別に簡単に集計するためのマスタ
+-- 実行No  ：1
+-- =============================================
+**/
+SELECT
+    --日単位
+    "date" AS DAILY
+    --週単位(土～金曜)
+    , CASE WHEN DAYOFWEEKISO("date") = 1 THEN DATEADD(DAY ,4 ,"date")
+           WHEN DAYOFWEEKISO("date") = 2 THEN DATEADD(DAY ,3 ,"date")
+           WHEN DAYOFWEEKISO("date") = 3 THEN DATEADD(DAY ,2 ,"date")
+           WHEN DAYOFWEEKISO("date") = 4 THEN DATEADD(DAY ,1 ,"date")
+           WHEN DAYOFWEEKISO("date") = 5 THEN "date"
+           WHEN DAYOFWEEKISO("date") = 6 THEN DATEADD(DAY ,6 ,"date")
+           WHEN DAYOFWEEKISO("date") = 7 THEN DATEADD(DAY ,5 ,"date")
+           ELSE NULL END AS WEEKLY
+    , CONCAT(YEAR(DATEADD(DAY , -6, WEEKLY)),'年'
+          ,MONTH(DATEADD(DAY , -6, WEEKLY)),'月'
+          ,DAY(DATEADD(DAY , -6, WEEKLY)),'日~'
+          ,YEAR(WEEKLY),'年'
+          ,MONTH(WEEKLY),'月'
+          ,DAY(WEEKLY),'日') AS WEEKLY_RANGE
+    --最新週を綺麗に表示するためにフラグを作成
+    , CASE WHEN WEEKLY > DATEADD(DAY ,-1 ,DATE(CONVERT_TIMEZONE('Asia/Tokyo', CURRENT_TIMESTAMP()))) THEN 1
+      ELSE 0 END AS WEEKLY_LATEST_FLG
+
+    --週単位(月～日曜)
+    , CASE WHEN DAYOFWEEKISO("date") = 1 THEN DATEADD(DAY ,6 ,"date")
+           WHEN DAYOFWEEKISO("date") = 2 THEN DATEADD(DAY ,5 ,"date")
+           WHEN DAYOFWEEKISO("date") = 3 THEN DATEADD(DAY ,4 ,"date")
+           WHEN DAYOFWEEKISO("date") = 4 THEN DATEADD(DAY ,3 ,"date")
+           WHEN DAYOFWEEKISO("date") = 5 THEN DATEADD(DAY ,2 ,"date")
+           WHEN DAYOFWEEKISO("date") = 6 THEN DATEADD(DAY ,1 ,"date")
+           WHEN DAYOFWEEKISO("date") = 7 THEN "date"
+           ELSE NULL END AS WEEKLY_MS
+    , CONCAT(YEAR(DATEADD(DAY , -6, WEEKLY_MS)),'年'
+          ,MONTH(DATEADD(DAY , -6, WEEKLY_MS)),'月'
+          ,DAY(DATEADD(DAY , -6, WEEKLY_MS)),'日~'
+          ,YEAR(WEEKLY_MS),'年'
+          ,MONTH(WEEKLY_MS),'月'
+          ,DAY(WEEKLY_MS),'日') AS WEEKLY_RANGE_MS
+    --最新週を綺麗に表示するためにフラグを作成
+    , CASE WHEN WEEKLY_MS > DATEADD(DAY ,-1 ,DATE(CONVERT_TIMEZONE('Asia/Tokyo', CURRENT_TIMESTAMP()))) THEN 1
+      ELSE 0 END AS WEEKLY_LATEST_FLG_MS
+
+    --Orbis実績年週との紐づけ用
+    , CASE WHEN YEAR(DATEADD(DAY , -6, WEEKLY_MS)) <> YEAR(WEEKLY_MS) AND LEN(WEEK(WEEKLY_MS)) = 1 THEN CONCAT(YEAR(WEEKLY_MS), 0, WEEK(WEEKLY_MS))
+           WHEN YEAR(DATEADD(DAY , -6, WEEKLY_MS)) <> YEAR(WEEKLY_MS) AND LEN(WEEK(WEEKLY_MS)) = 2 THEN CONCAT(YEAR(WEEKLY_MS), WEEK(WEEKLY_MS))
+           WHEN LEN(WEEK(WEEKLY_MS)) = 1 THEN CONCAT(YEAR(WEEKLY_MS), 0, WEEK(WEEKLY_MS))
+      ELSE CONCAT(YEAR(WEEKLY_MS), WEEK(WEEKLY_MS)) END AS YEAR_WEEK
+    , CASE WHEN LEN(MONTH("date")) = 1 THEN CONCAT(YEAR("date"), 0, MONTH("date"))
+      ELSE CONCAT(YEAR("date"), MONTH("date")) END AS YEAR_MONTH
+    --月単位
+    , CASE WHEN MONTH("date") IN (4, 6, 9, 11) THEN DATE(CONCAT(YEAR("date"),'-',MONTH("date"),'-30'))
+           WHEN MONTH("date") IN (1, 3, 5, 7, 8, 10, 12) THEN DATE(CONCAT(YEAR("date"),'-',MONTH("date"),'-31'))
+           WHEN YEAR("date") % 4 = 0 AND MONTH("date") = 2 THEN DATE(CONCAT(YEAR("date"),'-',MONTH("date"),'-29'))
+           ELSE DATE(CONCAT(YEAR("date"),'-',MONTH("date"),'-28')) END AS MONTHLY
+    , CONCAT(YEAR("date"),'年',MONTH("date"),'月') AS MONTHLY_RANGE
+    , CASE WHEN
+        CONCAT(YEAR("date"),MONTH("date")) =
+        CONCAT(YEAR(DATEADD(DAY ,-1 ,DATE(CONVERT_TIMEZONE('Asia/Tokyo', CURRENT_TIMESTAMP())))),MONTH(DATEADD(DAY ,-1 ,DATE(CONVERT_TIMEZONE('Asia/Tokyo', CURRENT_TIMESTAMP())))))
+      THEN 1 ELSE 0 END AS MONTHLY_LATEST_FLG
+    --Q単位
+    , DATE(CONCAT (
+            YEAR("date")
+            ,'-',
+            CASE WHEN QUARTER("date") = 1 THEN 3
+                 WHEN QUARTER("date") = 2 THEN 6
+                 WHEN QUARTER("date") = 3 THEN 9
+                 WHEN QUARTER("date") = 4 THEN 12
+            ELSE NULL END
+            ,'-',
+            CASE WHEN QUARTER("date") = 1 THEN 31
+                 WHEN QUARTER("date") = 2 THEN 30
+                 WHEN QUARTER("date") = 3 THEN 30
+                 WHEN QUARTER("date") = 4 THEN 31
+            ELSE NULL END
+           )) AS QUARTERLY
+    , CONCAT (CASE WHEN QUARTER("date") = 1 THEN YEAR("date") - 1
+            ELSE YEAR("date") END
+            ,'年',
+            CASE WHEN QUARTER("date") = 1 THEN 4
+                 WHEN QUARTER("date") = 2 THEN 1
+                 WHEN QUARTER("date") = 3 THEN 2
+                 WHEN QUARTER("date") = 4 THEN 3
+            ELSE NULL END
+            ,'Q'
+           ) AS QUARTERLY_RANGE
+    , CASE WHEN
+        CONCAT(YEAR("date"),QUARTER("date")) =
+        CONCAT(YEAR(DATE(CONVERT_TIMEZONE('Asia/Tokyo', CURRENT_TIMESTAMP()))),QUARTER(DATE(CONVERT_TIMEZONE('Asia/Tokyo', CURRENT_TIMESTAMP()))))
+     THEN 1 ELSE 0 END AS QUARTERLY_LATEST_FLG
+    --年単位
+    , DATE(CONCAT(YEAR("date"),'-12-31')) AS YEARLY
+    , CONCAT(YEAR("date"),'年') AS YEARLY_RANGE
+    , CASE WHEN
+        YEAR("date") = YEAR(CONVERT_TIMEZONE('Asia/Tokyo', CURRENT_TIMESTAMP()))
+      THEN 1 ELSE 0 END AS YEARLY_LATEST_FLG
+    --全期間
+    , DATE(DATEADD(DAY, -1 ,CONVERT_TIMEZONE('Asia/Tokyo', CURRENT_TIMESTAMP()))) AS TOTAL
+FROM M_CALENDER_DATE;
